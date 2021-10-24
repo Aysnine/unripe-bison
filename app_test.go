@@ -76,7 +76,7 @@ func TestIndexRoute(t *testing.T) {
 		// the err variable should be nil
 		assert.Nilf(t, err, test.description)
 
-		// Verify, that the reponse body equals the expected body
+		// Verify, that the response body equals the expected body
 		assert.Equalf(t, test.expectedBody, string(body), test.description)
 	}
 }
