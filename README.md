@@ -10,3 +10,7 @@ DATABASE_CONNECTION='<database connect string>' go run app.go
 ```
 
 API Routes:
+
+- `GET /` Root check heath
+- `GET /dashboard` Fiber dashboard
+- `GET /api/books` Books example
