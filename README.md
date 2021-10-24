@@ -5,15 +5,23 @@
 
 ## Quick start
 
+Add `.env` file and set variables:
+
 ``` bash
-# Running at http://127.0.0.1:9000
-DATABASE_CONNECTION='<database connect string>' go run app.go
+DATABASE_CONNECTION=postgresql://your-database-connection-string-here
 ```
 
-Use `.env` file:
+Command:
 
 ``` bash
-DATABASE_CONNECTION=postgresql://xxx
+# Running at http://127.0.0.1:9000
+go run app.go
+
+# Unit test
+go test
+
+# Unit test with simple coverage
+go test -cover
 ```
 
 ## API Routes
