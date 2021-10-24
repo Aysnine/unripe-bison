@@ -1,5 +1,13 @@
 # unripe-bison
 
+**👏 Available Online DEMO: https://unripe-bison.cnine.me**
+``` bash
+# You can try this
+curl https://unripe-bison.cnine.me/api/books
+```
+
+Docs References
+
 - [GoFiber](https://docs.gofiber.io/)
 - [CockroachDB (Serverless)](https://www.cockroachlabs.com/)
 
