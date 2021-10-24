@@ -16,7 +16,9 @@ func main() {
 	app := Setup()
 
 	// start the application
-	log.Fatal(app.Listen(":9000"))
+	// ! must with `localhost` on MacOS
+	// ! https://medium.com/@leeprovoost/suppressing-accept-incoming-network-connections-warnings-on-osx-7665b33927ca
+	log.Fatal(app.Listen("localhost:9000"))
 }
 
 func Setup() *fiber.App {
