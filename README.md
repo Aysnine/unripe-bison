@@ -34,3 +34,14 @@ go test ./...
 - `GET /` Root check heath
 - `GET /dashboard` Fiber dashboard
 - `GET /api/books` Books example
+
+## TODO
+
+- Books full CRUD
+- Websocket Demo
+- Custom Error response
+- Login auth
+- Transactions Demo
+- Unit test with mocked database, eg: [pgmock](https://github.com/jackc/pgmock)
+- Auto run initial sql
+- Auto Migrations
