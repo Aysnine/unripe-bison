@@ -32,13 +32,6 @@ func TestIndexRoute(t *testing.T) {
 			expectedBody:  "OK",
 		},
 		{
-			description:   "books route",
-			route:         "/",
-			expectedError: false,
-			expectedCode:  200,
-			expectedBody:  "OK",
-		},
-		{
 			description:   "non existing route",
 			route:         "/i-dont-exist",
 			expectedError: false,
@@ -86,4 +79,14 @@ func TestIndexRoute(t *testing.T) {
 		// Verify, that the reponse body equals the expected body
 		assert.Equalf(t, test.expectedBody, string(body), test.description)
 	}
+}
+
+func TestApiRoute(t *testing.T) {
+	app := Setup()
+
+	req, _ := http.NewRequest("GET", "/api/books", nil)
+	res, err := app.Test(req, -1)
+
+	assert.Equalf(t, false, err != nil, "books error")
+	assert.Equalf(t, 200, res.StatusCode, "books error")
 }

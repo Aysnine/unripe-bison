@@ -39,9 +39,12 @@ func Setup() *fiber.App {
 		return c.SendString("OK")
 	})
 
+	// Routing grouping
+	api := app.Group("/api")
+
 	// Get all records from postgreSQL
-	app.Get("/books", func(c *fiber.Ctx) error {
-		// Select all Employee(s) from database
+	api.Get("/books", func(c *fiber.Ctx) error {
+		// Select all book(s) from database
 		rows, err := db.Query(context.Background(), "SELECT id, name FROM books order by id")
 		if err != nil {
 			return c.Status(500).SendString(err.Error())
@@ -56,11 +59,11 @@ func Setup() *fiber.App {
 				return err // Exit if we get an error
 			}
 
-			// Append Employee to Employees
+			// Append
 			result.Books = append(result.Books, book)
 		}
 
-		// Return Employees in JSON format
+		// Return JSON
 		return c.JSON(result)
 	})
 
