@@ -56,7 +56,7 @@ func SetupApi_Books(app *fiber.App, db *pgx.Conn) {
 
 		// * Query
 
-		rows, err := db.Query(context.Background(), "SELECT id, name FROM books order by id")
+		rows, err := db.Query(context.Background(), "SELECT id, name FROM books")
 		if err != nil {
 			return ctx.Status(500).SendString(err.Error())
 		}
