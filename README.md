@@ -8,3 +8,5 @@
 # Running at http://127.0.0.1:9000
 DATABASE_CONNECTION='<database connect string>' go run app.go
 ```
+
+API Routes:

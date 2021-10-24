@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/monitor"
 	"github.com/jackc/pgx/v4"
 )
 
@@ -14,6 +15,9 @@ func main() {
 	// Use an external setup function in order
 	// to configure the app in tests as well
 	app := Setup()
+
+	// Web dashboard
+	app.Get("/dashboard", monitor.New())
 
 	// start the application
 	// ! must with `localhost` on MacOS
