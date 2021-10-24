@@ -40,45 +40,52 @@ func Setup() *fiber.App {
 		return c.SendString("OK")
 	})
 
+	// Extract routing grouping
+	SetupApi_Books(app, db)
+
+	// Return the configured app
+	return app
+}
+
+func SetupApi_Books(app *fiber.App, db *pgx.Conn) {
 	// Routing grouping
 	api := app.Group("/api")
 
-	// Get all records from postgreSQL
-	api.Get("/books", func(c *fiber.Ctx) error {
-		// Select all book(s) from database
+	// Get books JSON response
+	api.Get("/books", func(ctx *fiber.Ctx) error {
+
+		// * Query
+
 		rows, err := db.Query(context.Background(), "SELECT id, name FROM books order by id")
 		if err != nil {
-			return c.Status(500).SendString(err.Error())
+			return ctx.Status(500).SendString(err.Error())
 		}
 		defer rows.Close()
+
+		// * Marshaling
 
 		type Book struct {
 			ID   string `json:"id"`
 			Name string `json:"name"`
 		}
 
-		type Books struct {
+		type Response struct {
 			Books []Book `json:"books"`
 		}
 
-		result := Books{}
+		response := Response{Books: make([]Book, 0)}
 
 		for rows.Next() {
 			book := Book{}
 			if err := rows.Scan(&book.ID, &book.Name); err != nil {
-				return err // Exit if we get an error
+				return ctx.Status(500).SendString(err.Error())
 			}
-
-			// Append
-			result.Books = append(result.Books, book)
+			response.Books = append(response.Books, book)
 		}
 
-		// Return JSON
-		return c.JSON(result)
+		// * Final response
+		return ctx.JSON(response)
 	})
-
-	// Return the configured app
-	return app
 }
 
 func ConnectDB(connString string) *pgx.Conn {
