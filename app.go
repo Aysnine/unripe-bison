@@ -52,6 +52,15 @@ func Setup() *fiber.App {
 		}
 		defer rows.Close()
 
+		type Book struct {
+			ID   string `json:"id"`
+			Name string `json:"name"`
+		}
+
+		type Books struct {
+			Books []Book `json:"books"`
+		}
+
 		result := Books{}
 
 		for rows.Next() {
@@ -94,13 +103,4 @@ func ConnectDB(connString string) *pgx.Conn {
 func getEnvVariable(key string) string {
 	godotenv.Load(".env")
 	return os.Getenv(key)
-}
-
-type Book struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-}
-
-type Books struct {
-	Books []Book `json:"books"`
 }
