@@ -80,7 +80,7 @@ func ConnectDB(connString string) *pgx.Conn {
 	}
 
 	var greeting string
-	err = db.QueryRow(context.Background(), "select 'Query test success!'").Scan(&greeting)
+	err = db.QueryRow(context.Background(), "select 'Database connected!'").Scan(&greeting)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
 		os.Exit(1)
