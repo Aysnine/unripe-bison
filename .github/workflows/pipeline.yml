@@ -52,7 +52,7 @@ jobs:
         host: ${{secrets.DEPLOY_HOST}}                               # Remote server address - REQUIRED true
         user: ${{secrets.DEPLOY_USER}}                               # Remote server user - REQUIRED true
         password: ${{secrets.DEPLOY_PASSWORD}}                       # User password - REQUIRED at least one of "password" or "key" 
-        pre_upload: PID=`ps -ef | grep unripe-bison-app | grep -v grep | awk '{print $2}'`; if [ "${pid}" ] ; then kill -9 $PID; fi;
-        post_upload: nohup ./unripe-bison-app >/dev/null 2>&1  &
+        pre_upload: PID=`ps -ef | grep unripe-bison-app | grep -v grep | awk '{print $2}'`; if [ "${pid}" ] ; then kill -9 $PID; fi; echo "pre_upload"
+        post_upload: nohup ./unripe-bison-app >/dev/null 2>&1  & ; echo "post_upload"
         ssh_options: -o StrictHostKeyChecking=no
         scp_options: -v
