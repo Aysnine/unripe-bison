@@ -17,11 +17,8 @@ Command:
 # Running at http://127.0.0.1:9000
 go run app.go
 
-# Unit test
-go test
-
-# Unit test with simple coverage
-go test -cover
+# Quick Unit test
+go test ./...
 ```
 
 ## API Routes
