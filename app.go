@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
 	"github.com/jackc/pgx/v4"
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -27,7 +28,7 @@ func main() {
 
 func Setup() *fiber.App {
 	// connext database
-	db := ConnectDB(os.Getenv("DATABASE_CONNECTION"))
+	db := ConnectDB(getEnvVariable("DATABASE_CONNECTION"))
 
 	// Initialize a new app
 	app := fiber.New()
@@ -88,6 +89,18 @@ func ConnectDB(connString string) *pgx.Conn {
 	fmt.Println(greeting)
 
 	return db
+}
+
+func getEnvVariable(key string) string {
+
+	// load .env file
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	return os.Getenv(key)
 }
 
 type Book struct {
