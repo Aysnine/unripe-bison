@@ -43,16 +43,16 @@ jobs:
       run: |
         mkdir dist
         cp unripe-bison-app dist/
+        cp .github/workflows/app.sh dist/
         echo DATABASE_CONNECTION=${{ secrets.DATABASE_CONNECTION }} >> dist/.env
 
     - uses: mdallasanta/ssh-scp-deploy@v1.1.0
       with:
-        local: './dist/'                                             # Local file path - REQUIRED false - DEFAULT ./
+        local: './dist/*'                                            # Local file path - REQUIRED false - DEFAULT ./
         remote: '~/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
         host: ${{secrets.DEPLOY_HOST}}                               # Remote server address - REQUIRED true
         user: ${{secrets.DEPLOY_USER}}                               # Remote server user - REQUIRED true
         password: ${{secrets.DEPLOY_PASSWORD}}                       # User password - REQUIRED at least one of "password" or "key" 
-        pre_upload: PID=`ps -ef | grep unripe-bison-app | grep -v grep | awk '{print $2}'`; if [ "${pid}" ] ; then kill -9 $PID; fi; echo "pre_upload"
-        post_upload: nohup ./unripe-bison-app >/dev/null 2>&1  & ; echo "post_upload"
+        post_upload: chmod u+x ./app.sh; ./app.sh restart
         ssh_options: -o StrictHostKeyChecking=no
         scp_options: -v
