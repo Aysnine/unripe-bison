@@ -32,6 +32,13 @@ func TestIndexRoute(t *testing.T) {
 			expectedBody:  "OK",
 		},
 		{
+			description:   "books route",
+			route:         "/",
+			expectedError: false,
+			expectedCode:  200,
+			expectedBody:  "OK",
+		},
+		{
 			description:   "non existing route",
 			route:         "/i-dont-exist",
 			expectedError: false,
