@@ -1,0 +1,16 @@
+{
+  "name": "unripe-bison",
+  "version": "0.0.0",
+  "description": "Web server example by GoFiber⚡️ and CockroachDB📖",
+  "main": "index.js",
+  "repository": "https://github.com/Aysnine/unripe-bison.git",
+  "author": "CNine <cnine229@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "release": "standard-version"
+  },
+  "devDependencies": {
+    "standard-version": "^9.3.2"
+  }
+}

@@ -30,6 +30,16 @@ go run app.go
 go test ./...
 ```
 
+NodeJS Helper
+
+``` bash
+# Before each command
+yarn install
+
+# Make a release commit
+yarn release
+```
+
 ## API Routes
 
 - `GET /` Root check heath
