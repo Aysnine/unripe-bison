@@ -11,8 +11,8 @@ func main() {
 	// to configure the app in tests as well
 	app := Setup()
 
-	// start the application on http://localhost:3000
-	log.Fatal(app.Listen(":3000"))
+	// start the application on http://localhost:9000
+	log.Fatal(app.Listen(":9000"))
 }
 
 func Setup() *fiber.App {
