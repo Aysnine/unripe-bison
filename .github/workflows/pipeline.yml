@@ -42,7 +42,7 @@ jobs:
         cp unripe-bison-app dist/
         echo DATABASE_CONNECTION=${{ secrets.DATABASE_CONNECTION }} >> dist/.env
 
-    - uses: mdallasanta/ssh-scp-deploy@1.1.0
+    - uses: mdallasanta/ssh-scp-deploy@v1.1.0
       with:
         local: './dist/'                                             # Local file path - REQUIRED false - DEFAULT ./
         remote: '~/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
