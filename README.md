@@ -30,7 +30,7 @@ go run app.go
 go test ./...
 ```
 
-NodeJS Helper
+NodeJS Helper:
 
 ``` bash
 # Before each command
@@ -53,6 +53,6 @@ yarn release
 - Custom Error response
 - Login auth
 - Transactions Demo
-- Unit test with mocked database, eg: [pgmock](https://github.com/jackc/pgmock)
+- Unit test with mocked database. eg: [pgmock](https://github.com/jackc/pgmock)
 - Auto run initial sql
 - Auto Migrations
