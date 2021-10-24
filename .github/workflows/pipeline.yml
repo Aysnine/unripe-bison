@@ -23,3 +23,33 @@ jobs:
       env:
         DATABASE_CONNECTION: ${{ secrets.DATABASE_CONNECTION }}
       run: go test ./...
+
+  simple-build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Install Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17.x
+
+    - name: Build
+      run: go build -o unripe-bison-app
+
+    - name: Copy dist folder
+      run: |
+        mkdir dist
+        cp unripe-bison-app dist/
+        echo DATABASE_CONNECTION=${{ secrets.DATABASE_CONNECTION }} >> dist/.env
+
+    - uses: mdallasanta/ssh-scp-deploy@1.1.0
+      with:
+        local: './dist/'                                             # Local file path - REQUIRED false - DEFAULT ./
+        remote: '~/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
+        host: ${{secrets.DEPLOY_HOST}}                               # Remote server address - REQUIRED true
+        user: ${{secrets.DEPLOY_USER}}                               # Remote server user - REQUIRED true
+        password: ${{secrets.DEPLOY_PASSWORD}}                       # User password - REQUIRED at least one of "password" or "key" 
+        pre_upload: kill -9 `ps -ef | grep unripe-bison-app | grep -v grep | awk '{print $2}'`
+        post_upload: nohup ./unripe-bison-app >/dev/null 2>&1  &
+        ssh_options: -o StrictHostKeyChecking=no
+        scp_options: -v         
