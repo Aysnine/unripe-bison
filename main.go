@@ -47,8 +47,8 @@ func Setup() *fiber.App {
 	// Initialize a new app
 	app := fiber.New()
 
-	// Web dashboard
-	app.Get("/dashboard", monitor.New())
+	// Web monitor
+	app.Get("/monitor", monitor.New())
 
 	// Swagger document
 	app.Get("/swagger/*", swagger.Handler)

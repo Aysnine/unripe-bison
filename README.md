@@ -17,8 +17,8 @@ Docs References
 **Page Routes**
 
 - `/` Home check heath
-- `/dashboard` Fiber dashboard
-- `/swagger/index.html` Fiber dashboard
+- `/monitor` Fiber monitor
+- `/swagger/index.html` Swagger document
 
 **API Routes**
 
