@@ -21,7 +21,7 @@ start(){
   if [ $? -eq 0 ]; then
     echo "app is already running. pid=${pid}"
   else
-    nohup ${APP_PATH} &
+    nohup ${APP_PATH} >/dev/null 2>&1  &
   fi
 }
 
