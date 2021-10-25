@@ -81,7 +81,7 @@ func TestIndexRoute(t *testing.T) {
 	}
 }
 
-func TestApiRoute(t *testing.T) {
+func TestApiBooksRoute(t *testing.T) {
 	app := Setup()
 
 	req, _ := http.NewRequest("GET", "/api/books", nil)
