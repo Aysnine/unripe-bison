@@ -14,6 +14,17 @@ Docs References
 - [GoFiber](https://docs.gofiber.io/)
 - [CockroachDB (Serverless)](https://www.cockroachlabs.com/)
 
+**Page Routes**
+
+- `/` Home check heath
+- `/dashboard` Fiber dashboard
+- `/swagger/index.html` Fiber dashboard
+
+**API Routes**
+
+- `GET /api/books` Books example
+- `GET /api/hongkong-weather` Request from this [Free API](https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=sc)
+
 ## Quick start
 
 Add `.env` file and set variables:
@@ -45,13 +56,6 @@ yarn install
 # Make a release commit
 yarn release
 ```
-
-## API Routes
-
-- `GET /` Root check heath
-- `GET /dashboard` Fiber dashboard
-- `GET /hongkong-weather` Request from this [Free API](https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=sc)
-- `GET /api/books` Books example
 
 ## TODO
 
