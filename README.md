@@ -1,6 +1,8 @@
 # unripe-bison
 
-**👏 Available Online DEMO: https://unripe-bison.cnine.me**
+*Web server example by GoFiber⚡️ and CockroachDB📖. Just a random project name😜.*
+
+**🎉🎉🎉 Online DEMO: https://unripe-bison.cnine.me**
 
 ``` bash
 # You can try this
