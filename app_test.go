@@ -90,3 +90,13 @@ func TestApiBooksRoute(t *testing.T) {
 	assert.Equalf(t, false, err != nil, "books error")
 	assert.Equalf(t, 200, res.StatusCode, "books error")
 }
+
+func TestHongKongWeatherRoute(t *testing.T) {
+	app := Setup()
+
+	req, _ := http.NewRequest("GET", "/hongkong-weather", nil)
+	res, err := app.Test(req, -1)
+
+	assert.Equalf(t, false, err != nil, "books error")
+	assert.Equalf(t, 200, res.StatusCode, "books error")
+}
