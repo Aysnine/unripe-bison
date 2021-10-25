@@ -27,7 +27,7 @@ jobs:
 
   simple-build-and-deploy:
     needs: test
-    if: startsWith(github.event.head_commit.message, 'chore(release)')
+    if: ${{ startsWith(github.event.head_commit.message, 'chore(release)') || contains(github.event.head_commit.message, '[deploy]') }}
     runs-on: ubuntu-latest
     steps:
 

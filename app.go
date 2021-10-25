@@ -7,7 +7,9 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
+	requestId "github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/jackc/pgx/v4"
 	"github.com/joho/godotenv"
 )
@@ -19,6 +21,12 @@ func main() {
 
 	// Web dashboard
 	app.Get("/dashboard", monitor.New())
+
+	// Default middleware config
+	app.Use(requestId.New())
+
+	// Default middleware config
+	app.Use(logger.New())
 
 	// start the application
 	// ! must with `localhost` on MacOS
