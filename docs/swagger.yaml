@@ -8,7 +8,7 @@ info:
   license:
     name: MIT
   title: Server unripe-bison API
-  version: 0.1.1
+  version: 0.2.0
 paths:
   /api/books:
     get:
@@ -16,7 +16,7 @@ paths:
       produces:
       - application/json
       summary: books
-  /hongkong-weather:
+  /api/hongkong-weather:
     get:
       operationId: get-hongkong-weather
       produces:

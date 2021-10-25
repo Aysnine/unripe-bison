@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/Aysnine/unripe-bison/compare/v0.1.1...v0.2.0) (2021-10-25)
+
+
+### Features
+
+* update hongkong-weather to api ([c192591](https://github.com/Aysnine/unripe-bison/commit/c19259164e8fbea728d14d753a84a17cc34d4b97))
+
 ### [0.1.1](https://github.com/Aysnine/unripe-bison/compare/v0.1.1-0...v0.1.1) (2021-10-25)
 
 

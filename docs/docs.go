@@ -38,7 +38,7 @@ var doc = `{
                 "operationId": "get-books"
             }
         },
-        "/hongkong-weather": {
+        "/api/hongkong-weather": {
             "get": {
                 "produces": [
                     "application/json"
@@ -61,7 +61,7 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "0.1.1",
+	Version:     "0.2.0",
 	Host:        "unripe-bision.cnine.me",
 	BasePath:    "/",
 	Schemes:     []string{},
