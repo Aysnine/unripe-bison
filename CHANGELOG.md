@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/Aysnine/unripe-bison/compare/v0.1.1-0...v0.1.1) (2021-10-25)
+
+
+### Bug Fixes
+
+* noneffective middlewares ([6437480](https://github.com/Aysnine/unripe-bison/commit/6437480188bfc40ce11a6a313a58055c9fdcb214))
+
 ### [0.1.1-0](https://github.com/Aysnine/unripe-bison/compare/v0.1.0...v0.1.1-0) (2021-10-25)
 
 ## [0.1.0](https://github.com/Aysnine/unripe-bison/compare/v0.0.3...v0.1.0) (2021-10-25)
