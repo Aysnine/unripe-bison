@@ -1,0 +1,25 @@
+basePath: /
+host: unripe-bision.cnine.me
+info:
+  contact:
+    email: cnine229@gmail.com
+    name: CNine
+  description: "Web server example by GoFiber⚡️ and CockroachDB\U0001F4D6"
+  license:
+    name: MIT
+  title: Server unripe-bison API
+  version: 0.1.1
+paths:
+  /api/books:
+    get:
+      operationId: get-books
+      produces:
+      - application/json
+      summary: books
+  /hongkong-weather:
+    get:
+      operationId: get-hongkong-weather
+      produces:
+      - application/json
+      summary: hongkong weather info
+swagger: "2.0"

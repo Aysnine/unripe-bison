@@ -30,6 +30,10 @@ go run app.go
 
 # Quick Unit test
 go test ./...
+
+# Make swagger docs when API update.
+# Need global install: https://github.com/arsmn/fiber-swagger
+swag init
 ```
 
 NodeJS Helper:

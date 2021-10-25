@@ -16,6 +16,8 @@ import (
 	requestId "github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/jackc/pgx/v4"
 	"github.com/joho/godotenv"
+
+	_ "github.com/Aysnine/unripe-bison/docs"
 )
 
 func main() {
@@ -29,6 +31,14 @@ func main() {
 	log.Fatal(app.Listen("localhost:9000"))
 }
 
+// @title Server unripe-bison API
+// @version 0.1.1
+// @description Web server example by GoFiber⚡️ and CockroachDB📖
+// @contact.name CNine
+// @contact.email cnine229@gmail.com
+// @license.name MIT
+// @host unripe-bision.cnine.me
+// @BasePath /
 func Setup() *fiber.App {
 	// connext database
 	db := ConnectDB(getEnvVariable("DATABASE_CONNECTION"))
@@ -65,6 +75,11 @@ func Setup() *fiber.App {
 	return app
 }
 
+// GetBooks godoc
+// @Summary books
+// @ID get-books
+// @Produce  json
+// @Router /api/books [get]
 func SetupApi_Books(app *fiber.App, db *pgx.Conn) {
 	// Routing grouping
 	api := app.Group("/api")
@@ -106,6 +121,11 @@ func SetupApi_Books(app *fiber.App, db *pgx.Conn) {
 	})
 }
 
+// GetHongKongWeather godoc
+// @Summary hongkong weather info
+// @ID get-hongkong-weather
+// @Produce  json
+// @Router /hongkong-weather [get]
 func SetupApi_HongKongWeather(app *fiber.App) {
 	// Request other server
 	app.Get("/hongkong-weather", func(ctx *fiber.Ctx) error {

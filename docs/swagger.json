@@ -1,0 +1,37 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Web server example by GoFiber⚡️ and CockroachDB📖",
+        "title": "Server unripe-bison API",
+        "contact": {
+            "name": "CNine",
+            "email": "cnine229@gmail.com"
+        },
+        "license": {
+            "name": "MIT"
+        },
+        "version": "0.1.1"
+    },
+    "host": "unripe-bision.cnine.me",
+    "basePath": "/",
+    "paths": {
+        "/api/books": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "books",
+                "operationId": "get-books"
+            }
+        },
+        "/hongkong-weather": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "hongkong weather info",
+                "operationId": "get-hongkong-weather"
+            }
+        }
+    }
+}
