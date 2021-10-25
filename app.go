@@ -22,15 +22,6 @@ func main() {
 	// to configure the app in tests as well
 	app := Setup()
 
-	// Web dashboard
-	app.Get("/dashboard", monitor.New())
-
-	// Default middleware config
-	app.Use(requestId.New())
-
-	// Default middleware config
-	app.Use(logger.New())
-
 	// start the application
 	// ! must with `localhost` on MacOS
 	// ! https://medium.com/@leeprovoost/suppressing-accept-incoming-network-connections-warnings-on-osx-7665b33927ca
@@ -43,6 +34,15 @@ func Setup() *fiber.App {
 
 	// Initialize a new app
 	app := fiber.New()
+
+	// Web dashboard
+	app.Get("/dashboard", monitor.New())
+
+	// Default middleware config
+	app.Use(requestId.New())
+
+	// Default middleware config
+	app.Use(logger.New())
 
 	// Register the index route with a simple
 	// "OK" response. It should return status
