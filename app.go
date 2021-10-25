@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 
+	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
@@ -37,6 +38,9 @@ func Setup() *fiber.App {
 
 	// Web dashboard
 	app.Get("/dashboard", monitor.New())
+
+	// Swagger document
+	app.Get("/swagger/*", swagger.Handler)
 
 	// Default middleware config
 	app.Use(requestId.New())
