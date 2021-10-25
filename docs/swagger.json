@@ -5,6 +5,7 @@
         "title": "Server unripe-bison API",
         "contact": {
             "name": "CNine",
+            "url": "https://github.com/Aysnine/unripe-bison",
             "email": "cnine229@gmail.com"
         },
         "license": {
@@ -12,7 +13,7 @@
         },
         "version": "0.2.0"
     },
-    "host": "unripe-bision.cnine.me",
+    "host": "unripe-bison.cnine.me",
     "basePath": "/",
     "paths": {
         "/api/books": {

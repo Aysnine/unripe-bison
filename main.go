@@ -36,8 +36,9 @@ func main() {
 // @description Web server example by GoFiber⚡️ and CockroachDB📖
 // @contact.name CNine
 // @contact.email cnine229@gmail.com
+// @contact.url https://github.com/Aysnine/unripe-bison
 // @license.name MIT
-// @host unripe-bision.cnine.me
+// @host unripe-bison.cnine.me
 // @BasePath /
 func Setup() *fiber.App {
 	// connext database

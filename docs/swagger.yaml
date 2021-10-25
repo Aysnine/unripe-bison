@@ -1,9 +1,10 @@
 basePath: /
-host: unripe-bision.cnine.me
+host: unripe-bison.cnine.me
 info:
   contact:
     email: cnine229@gmail.com
     name: CNine
+    url: https://github.com/Aysnine/unripe-bison
   description: "Web server example by GoFiber⚡️ and CockroachDB\U0001F4D6"
   license:
     name: MIT

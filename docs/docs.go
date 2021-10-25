@@ -19,6 +19,7 @@ var doc = `{
         "title": "{{.Title}}",
         "contact": {
             "name": "CNine",
+            "url": "https://github.com/Aysnine/unripe-bison",
             "email": "cnine229@gmail.com"
         },
         "license": {
@@ -62,7 +63,7 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "0.2.0",
-	Host:        "unripe-bision.cnine.me",
+	Host:        "unripe-bison.cnine.me",
 	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "Server unripe-bison API",
