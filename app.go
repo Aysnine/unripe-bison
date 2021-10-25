@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -51,6 +54,9 @@ func Setup() *fiber.App {
 	// Extract routing grouping
 	SetupApi_Books(app, db)
 
+	// Extract routing grouping
+	SetupApi_HongKongWeather(app)
+
 	// Return the configured app
 	return app
 }
@@ -90,6 +96,37 @@ func SetupApi_Books(app *fiber.App, db *pgx.Conn) {
 			}
 			response.Books = append(response.Books, book)
 		}
+
+		// * Final response
+		return ctx.JSON(response)
+	})
+}
+
+func SetupApi_HongKongWeather(app *fiber.App) {
+	// Request other server
+	app.Get("/hongkong-weather", func(ctx *fiber.Ctx) error {
+
+		// * Request
+
+		resp, err := http.Get("https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=sc")
+		if err != nil {
+			return ctx.Status(500).SendString(err.Error())
+		}
+		defer resp.Body.Close()
+
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return ctx.Status(500).SendString(err.Error())
+		}
+
+		// * Marshaling
+
+		type Response struct {
+			GeneralSituation string `json:"generalSituation"`
+		}
+
+		response := Response{}
+		json.Unmarshal(body, &response)
 
 		// * Final response
 		return ctx.JSON(response)

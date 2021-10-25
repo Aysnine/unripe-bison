@@ -46,6 +46,7 @@ yarn release
 
 - `GET /` Root check heath
 - `GET /dashboard` Fiber dashboard
+- `GET /hongkong-weather` Request from this [Free API](https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=sc)
 - `GET /api/books` Books example
 
 ## TODO
