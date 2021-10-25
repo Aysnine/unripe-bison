@@ -125,10 +125,13 @@ func SetupApi_Books(app *fiber.App, db *pgx.Conn) {
 // @Summary hongkong weather info
 // @ID get-hongkong-weather
 // @Produce  json
-// @Router /hongkong-weather [get]
+// @Router /api/hongkong-weather [get]
 func SetupApi_HongKongWeather(app *fiber.App) {
+	// Routing grouping
+	api := app.Group("/api")
+
 	// Request other server
-	app.Get("/hongkong-weather", func(ctx *fiber.Ctx) error {
+	api.Get("/hongkong-weather", func(ctx *fiber.Ctx) error {
 
 		// * Request
 

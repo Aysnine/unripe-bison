@@ -94,7 +94,7 @@ func TestApiBooksRoute(t *testing.T) {
 func TestHongKongWeatherRoute(t *testing.T) {
 	app := Setup()
 
-	req, _ := http.NewRequest("GET", "/hongkong-weather", nil)
+	req, _ := http.NewRequest("GET", "/api/hongkong-weather", nil)
 	res, err := app.Test(req, -1)
 
 	assert.Equalf(t, false, err != nil, "books error")
