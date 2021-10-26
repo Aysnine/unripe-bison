@@ -33,8 +33,11 @@ Docs References
 Add `.env` file and set variables:
 
 ``` bash
+MODE=development
 DATABASE_CONNECTION=postgresql://your-database-connection-string-here
 ```
+
+- MODE = `development` | `production`
 
 Command:
 

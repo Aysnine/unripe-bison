@@ -55,8 +55,10 @@ func Setup() *fiber.App {
 	// Default middleware config
 	app.Use(requestId.New())
 
-	// Default middleware config
-	app.Use(logger.New())
+	if getEnvVariable("MODE") == "development" {
+		// Default middleware config
+		app.Use(logger.New())
+	}
 
 	// Register the index route with a simple
 	// "OK" response. It should return status
