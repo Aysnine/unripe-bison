@@ -74,3 +74,4 @@ yarn release
 ## Learn References
 
 - [A Complete Guide to JSON in Golang (With Examples)](https://www.sohamkamani.com/golang/json/)
+- [Go语言中的面向对象](http://kangkona.github.io/oo-in-golang/)
