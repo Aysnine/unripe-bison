@@ -31,11 +31,10 @@ func main() {
 	log.Fatal(app.Listen("localhost:9000"))
 }
 
-// @title Server unripe-bison API
+// @title UnripeBison Server API
 // @version 0.2.0
 // @description Web server example by GoFiber⚡️ and CockroachDB📖
-// @contact.name CNine
-// @contact.email cnine229@gmail.com
+// @contact.name Github
 // @contact.url https://github.com/Aysnine/unripe-bison
 // @license.name MIT
 // @host unripe-bison.cnine.me

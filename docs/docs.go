@@ -18,9 +18,8 @@ var doc = `{
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
         "contact": {
-            "name": "CNine",
-            "url": "https://github.com/Aysnine/unripe-bison",
-            "email": "cnine229@gmail.com"
+            "name": "Github",
+            "url": "https://github.com/Aysnine/unripe-bison"
         },
         "license": {
             "name": "MIT"
@@ -66,7 +65,7 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "unripe-bison.cnine.me",
 	BasePath:    "/",
 	Schemes:     []string{},
-	Title:       "Server unripe-bison API",
+	Title:       "UnripeBison Server API",
 	Description: "Web server example by GoFiber⚡️ and CockroachDB📖",
 }
 

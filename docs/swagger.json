@@ -2,11 +2,10 @@
     "swagger": "2.0",
     "info": {
         "description": "Web server example by GoFiber⚡️ and CockroachDB📖",
-        "title": "Server unripe-bison API",
+        "title": "UnripeBison Server API",
         "contact": {
-            "name": "CNine",
-            "url": "https://github.com/Aysnine/unripe-bison",
-            "email": "cnine229@gmail.com"
+            "name": "Github",
+            "url": "https://github.com/Aysnine/unripe-bison"
         },
         "license": {
             "name": "MIT"
