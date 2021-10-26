@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -57,6 +58,9 @@ func Setup() *fiber.App {
 	// Default middleware config
 	app.Use(requestId.New())
 
+	// Custom Timing middleware
+	app.Use(ServerTiming())
+
 	// Register the index route with a simple
 	// "OK" response. It should return status
 	// code 200
@@ -83,11 +87,16 @@ func SetupApi_GetBooks(app *fiber.App, db *pgx.Conn) {
 
 		// * Query
 
+		start := time.Now()
+
 		rows, err := db.Query(context.Background(), "SELECT id, name FROM books")
 		if err != nil {
 			return ctx.Status(500).SendString(err.Error())
 		}
 		defer rows.Close()
+
+		stop := time.Now()
+		ctx.Append("Server-Timing", fmt.Sprintf("db;query=%v", stop.Sub(start).String()))
 
 		// * Marshaling
 
@@ -126,11 +135,16 @@ func SetupApi_GetHongKongWeather(app *fiber.App) {
 
 		// * Request
 
+		start := time.Now()
+
 		resp, err := http.Get("https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=sc")
 		if err != nil {
 			return ctx.Status(500).SendString(err.Error())
 		}
 		defer resp.Body.Close()
+
+		stop := time.Now()
+		ctx.Append("Server-Timing", fmt.Sprintf("rest;request=%v", stop.Sub(start).String()))
 
 		body, err := io.ReadAll(resp.Body)
 		if err != nil {
@@ -173,4 +187,19 @@ func ConnectDB(connString string) *pgx.Conn {
 func getEnvVariable(key string) string {
 	godotenv.Load(".env")
 	return os.Getenv(key)
+}
+
+// Will measure how long it takes before a response is returned
+func ServerTiming() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		start := time.Now()
+		err := ctx.Next()
+		stop := time.Now()
+
+		// Do something with response
+		ctx.Append("Server-Timing", fmt.Sprintf("app;dur=%v", stop.Sub(start).String()))
+
+		// return stack error if exist
+		return err
+	}
 }
