@@ -66,11 +66,9 @@ func Setup() *fiber.App {
 		return c.SendString("OK")
 	})
 
-	// Extract routing grouping
-	SetupApi_Books(app, db)
-
-	// Extract routing grouping
-	SetupApi_HongKongWeather(app)
+	// Extract single route
+	SetupApi_GetBooks(app, db)
+	SetupApi_GetHongKongWeather(app)
 
 	// Return the configured app
 	return app
@@ -81,12 +79,9 @@ func Setup() *fiber.App {
 // @ID get-books
 // @Produce  json
 // @Router /api/books [get]
-func SetupApi_Books(app *fiber.App, db *pgx.Conn) {
-	// Routing grouping
-	api := app.Group("/api")
-
+func SetupApi_GetBooks(app *fiber.App, db *pgx.Conn) {
 	// Get books JSON response
-	api.Get("/books", func(ctx *fiber.Ctx) error {
+	app.Get("/api/books", func(ctx *fiber.Ctx) error {
 
 		// * Query
 
@@ -127,12 +122,9 @@ func SetupApi_Books(app *fiber.App, db *pgx.Conn) {
 // @ID get-hongkong-weather
 // @Produce  json
 // @Router /api/hongkong-weather [get]
-func SetupApi_HongKongWeather(app *fiber.App) {
-	// Routing grouping
-	api := app.Group("/api")
-
+func SetupApi_GetHongKongWeather(app *fiber.App) {
 	// Request other server
-	api.Get("/hongkong-weather", func(ctx *fiber.Ctx) error {
+	app.Get("/api/hongkong-weather", func(ctx *fiber.Ctx) error {
 
 		// * Request
 
