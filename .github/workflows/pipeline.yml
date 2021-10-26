@@ -55,6 +55,7 @@ jobs:
         mkdir dist
         cp unripe-bison-app dist/
         cp .github/workflows/app.sh dist/
+        echo MODE=production >> dist/.env
         echo DATABASE_CONNECTION=${{ secrets.DATABASE_CONNECTION }} >> dist/.env
 
     - uses: mdallasanta/ssh-scp-deploy@v1.1.0
