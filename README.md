@@ -21,7 +21,7 @@ Docs References
 
 - `/` Home check heath
 - `/monitor` Fiber monitor
-- `/swagger/index.html` Swagger document
+- `/swagger/doc.json` Swagger document data only
 
 **API Routes**
 

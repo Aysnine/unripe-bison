@@ -9,15 +9,12 @@ import (
 	"net/http"
 	"os"
 
-	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
 	requestId "github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/jackc/pgx/v4"
 	"github.com/joho/godotenv"
-
-	_ "github.com/Aysnine/unripe-bison/docs"
 )
 
 func main() {
@@ -50,7 +47,7 @@ func Setup() *fiber.App {
 	app.Get("/monitor", monitor.New())
 
 	// Swagger document
-	app.Get("/swagger/*", swagger.Handler)
+	app.Static("/swagger/doc.json", "./docs/swagger.json")
 
 	// Default middleware config
 	app.Use(requestId.New())
