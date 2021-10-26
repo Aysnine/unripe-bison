@@ -49,13 +49,13 @@ func Setup() *fiber.App {
 	// Swagger document
 	app.Static("/swagger/doc.json", "./docs/swagger.json")
 
-	// Default middleware config
-	app.Use(requestId.New())
-
 	if getEnvVariable("MODE") == "development" {
 		// Default middleware config
 		app.Use(logger.New())
 	}
+
+	// Default middleware config
+	app.Use(requestId.New())
 
 	// Register the index route with a simple
 	// "OK" response. It should return status
