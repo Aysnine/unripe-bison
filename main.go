@@ -38,6 +38,9 @@ func main() {
 // @host unripe-bison.cnine.me
 // @BasePath /
 func Setup() *fiber.App {
+	// App setup timing
+	start := time.Now()
+
 	// connext database
 	db := ConnectDB(getEnvVariable("DATABASE_CONNECTION"))
 
@@ -71,6 +74,10 @@ func Setup() *fiber.App {
 	// Extract single route
 	SetupApi_GetBooks(app, db)
 	SetupApi_GetHongKongWeather(app)
+
+	// App setup timing
+	stop := time.Now()
+	fmt.Println(fmt.Sprintf("[duration=%v] ", stop.Sub(start).String()) + "All setup done!")
 
 	// Return the configured app
 	return app
@@ -166,6 +173,9 @@ func SetupApi_GetHongKongWeather(app *fiber.App) {
 }
 
 func ConnectDB(connString string) *pgx.Conn {
+	// Database connect timing
+	start := time.Now()
+
 	db, err := pgx.Connect(context.Background(), connString)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
@@ -179,7 +189,9 @@ func ConnectDB(connString string) *pgx.Conn {
 		os.Exit(1)
 	}
 
-	fmt.Println(greeting)
+	// Database connect timing
+	stop := time.Now()
+	fmt.Println(fmt.Sprintf("[duration=%v] ", stop.Sub(start).String()) + greeting)
 
 	return db
 }
