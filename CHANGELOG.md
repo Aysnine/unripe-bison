@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/Aysnine/unripe-bison/compare/v0.2.0...v0.3.0) (2021-10-28)
+
+
+### Features
+
+* **api:**  random anime image ([2f7ed5c](https://github.com/Aysnine/unripe-bison/commit/2f7ed5c26cd41f91537dfb1be36d2c7ff80d8879))
+
 ## [0.2.0](https://github.com/Aysnine/unripe-bison/compare/v0.1.1...v0.2.0) (2021-10-25)
 
 
