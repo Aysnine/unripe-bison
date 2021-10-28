@@ -10,7 +10,7 @@
         "license": {
             "name": "MIT"
         },
-        "version": "0.2.0"
+        "version": "v0"
     },
     "host": "unripe-bison.cnine.me",
     "basePath": "/",
@@ -31,6 +31,15 @@
                 ],
                 "summary": "hongkong weather info",
                 "operationId": "get-hongkong-weather"
+            }
+        },
+        "/api/random-anime-image": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "hongkong weather info",
+                "operationId": "get-random-anime-image"
             }
         }
     }

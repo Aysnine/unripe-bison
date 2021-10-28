@@ -30,7 +30,7 @@ func main() {
 }
 
 // @title UnripeBison Server API
-// @version 0.2.0
+// @version v0
 // @description Web server example by GoFiber⚡️ and CockroachDB📖
 // @contact.name Github
 // @contact.url https://github.com/Aysnine/unripe-bison

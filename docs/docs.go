@@ -46,6 +46,15 @@ var doc = `{
                 "summary": "hongkong weather info",
                 "operationId": "get-hongkong-weather"
             }
+        },
+        "/api/random-anime-image": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "hongkong weather info",
+                "operationId": "get-random-anime-image"
+            }
         }
     }
 }`
@@ -61,7 +70,7 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "0.2.0",
+	Version:     "v0",
 	Host:        "unripe-bison.cnine.me",
 	BasePath:    "/",
 	Schemes:     []string{},
