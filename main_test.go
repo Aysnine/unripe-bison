@@ -100,3 +100,13 @@ func TestHongKongWeatherRoute(t *testing.T) {
 	assert.Equalf(t, false, err != nil, "books error")
 	assert.Equalf(t, 200, res.StatusCode, "books error")
 }
+
+func TestRandomAnimeImageRoute(t *testing.T) {
+	app := Setup()
+
+	req, _ := http.NewRequest("GET", "/api/random-anime-image", nil)
+	res, err := app.Test(req, -1)
+
+	assert.Equalf(t, false, err != nil, "error")
+	assert.Equalf(t, 302, res.StatusCode, "error")
+}

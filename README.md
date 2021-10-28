@@ -27,6 +27,7 @@ Docs References
 
 - `GET /api/books` Books example
 - `GET /api/hongkong-weather` Request from this [Free API](https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=sc)
+- `GET /api/random-anime-image` Request from this [WaiFu.PICS](https://waifu.pics/docs)
 
 ## Quick start
 

@@ -74,6 +74,7 @@ func Setup() *fiber.App {
 	// Extract single route
 	SetupApi_GetBooks(app, db)
 	SetupApi_GetHongKongWeather(app)
+	SetupApi_GetRandomAnimeImage(app)
 
 	// App setup timing
 	stop := time.Now()
@@ -169,6 +170,47 @@ func SetupApi_GetHongKongWeather(app *fiber.App) {
 
 		// * Final response
 		return ctx.JSON(response)
+	})
+}
+
+// GetRandomAnimeImage godoc
+// @Summary hongkong weather info
+// @ID get-random-anime-image
+// @Produce  json
+// @Router /api/random-anime-image [get]
+func SetupApi_GetRandomAnimeImage(app *fiber.App) {
+	// Request other server
+	app.Get("/api/random-anime-image", func(ctx *fiber.Ctx) error {
+
+		// * Request
+
+		start := time.Now()
+
+		resp, err := http.Get("https://api.waifu.pics/sfw/neko")
+		if err != nil {
+			return ctx.Status(500).SendString(err.Error())
+		}
+		defer resp.Body.Close()
+
+		stop := time.Now()
+		ctx.Append("Server-Timing", fmt.Sprintf("rest;request=%v", stop.Sub(start).String()))
+
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return ctx.Status(500).SendString(err.Error())
+		}
+
+		// * Unmarshal
+
+		type Result struct {
+			Url string `json:"url"`
+		}
+
+		result := Result{}
+		json.Unmarshal(body, &result)
+
+		// * Final response
+		return ctx.Redirect(result.Url)
 	})
 }
 
