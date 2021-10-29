@@ -184,33 +184,42 @@ func SetupApi_GetRandomAnimeImage(app *fiber.App) {
 
 		// * Request
 
-		start := time.Now()
+		restStart := time.Now()
 
-		resp, err := http.Get("https://api.waifu.pics/sfw/neko")
-		if err != nil {
-			return ctx.Status(500).SendString(err.Error())
+		restResponse, restErr := http.Get("https://api.waifu.pics/sfw/neko")
+		if restErr != nil {
+			return ctx.Status(500).SendString(restErr.Error())
 		}
-		defer resp.Body.Close()
+		defer restResponse.Body.Close()
 
-		stop := time.Now()
-		ctx.Append("Server-Timing", fmt.Sprintf("rest;request=%v", stop.Sub(start).String()))
+		restStop := time.Now()
+		ctx.Append("Server-Timing", fmt.Sprintf("rest;request=%v", restStop.Sub(restStart).String()))
 
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			return ctx.Status(500).SendString(err.Error())
+		restBody, restErr := io.ReadAll(restResponse.Body)
+		if restErr != nil {
+			return ctx.Status(500).SendString(restErr.Error())
 		}
 
-		// * Unmarshal
+		// * Rest Marshaling
 
-		type Result struct {
+		type RestResult struct {
 			Url string `json:"url"`
 		}
 
-		result := Result{}
-		json.Unmarshal(body, &result)
+		restResult := RestResult{}
+		json.Unmarshal(restBody, &restResult)
 
-		// * Final response
-		return ctx.Redirect(result.Url)
+		// * File stream read and write
+
+		fileRestResponse, fileRestErr := http.Get(restResult.Url)
+		if fileRestErr != nil {
+			return ctx.Status(500).SendString(fileRestErr.Error())
+		}
+		defer fileRestResponse.Body.Close()
+
+		ctx.SendStream(fileRestResponse.Body)
+
+		return nil
 	})
 }
 

@@ -108,5 +108,5 @@ func TestRandomAnimeImageRoute(t *testing.T) {
 	res, err := app.Test(req, -1)
 
 	assert.Equalf(t, false, err != nil, "error")
-	assert.Equalf(t, 302, res.StatusCode, "error status code")
+	assert.Equalf(t, 200, res.StatusCode, "error status code")
 }
