@@ -251,7 +251,7 @@ func ServerTiming() fiber.Handler {
 		stop := time.Now()
 
 		// Do something with response
-		ctx.Append("Server-Timing", fmt.Sprintf("app;dur=%v", stop.Sub(start).String()))
+		ctx.Append("Server-Timing", fmt.Sprintf("app;duration=%v", stop.Sub(start).String()))
 
 		// return stack error if exist
 		return err
