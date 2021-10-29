@@ -87,8 +87,8 @@ func TestApiBooksRoute(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/api/books", nil)
 	res, err := app.Test(req, -1)
 
-	assert.Equalf(t, false, err != nil, "books error")
-	assert.Equalf(t, 200, res.StatusCode, "books error")
+	assert.Equalf(t, false, err != nil, "error")
+	assert.Equalf(t, 200, res.StatusCode, "error status code")
 }
 
 func TestHongKongWeatherRoute(t *testing.T) {
@@ -97,8 +97,8 @@ func TestHongKongWeatherRoute(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/api/hongkong-weather", nil)
 	res, err := app.Test(req, -1)
 
-	assert.Equalf(t, false, err != nil, "books error")
-	assert.Equalf(t, 200, res.StatusCode, "books error")
+	assert.Equalf(t, false, err != nil, "error")
+	assert.Equalf(t, 200, res.StatusCode, "error status code")
 }
 
 func TestRandomAnimeImageRoute(t *testing.T) {
@@ -108,5 +108,5 @@ func TestRandomAnimeImageRoute(t *testing.T) {
 	res, err := app.Test(req, -1)
 
 	assert.Equalf(t, false, err != nil, "error")
-	assert.Equalf(t, 302, res.StatusCode, "error")
+	assert.Equalf(t, 302, res.StatusCode, "error status code")
 }
