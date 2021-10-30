@@ -38,11 +38,14 @@ func main() {
 // @host unripe-bison.cnine.me
 // @BasePath /
 func Setup() *fiber.App {
+	// Ready env
+	godotenv.Load(".env")
+
 	// App setup timing
 	start := time.Now()
 
 	// connext database
-	db := ConnectDB(getEnvVariable("DATABASE_CONNECTION"))
+	db := ConnectDB(os.Getenv("DATABASE_CONNECTION"))
 
 	// Initialize a new app
 	app := fiber.New()
@@ -53,7 +56,7 @@ func Setup() *fiber.App {
 	// Swagger document
 	app.Static("/swagger/doc.json", "./docs/swagger.json")
 
-	if getEnvVariable("MODE") == "development" {
+	if os.Getenv("MODE") == "development" {
 		// Default middleware config
 		app.Use(logger.New())
 	}
@@ -245,11 +248,6 @@ func ConnectDB(connString string) *pgx.Conn {
 	fmt.Println(fmt.Sprintf("[duration=%v] ", stop.Sub(start).String()) + greeting)
 
 	return db
-}
-
-func getEnvVariable(key string) string {
-	godotenv.Load(".env")
-	return os.Getenv(key)
 }
 
 // Will measure how long it takes before a response is returned
