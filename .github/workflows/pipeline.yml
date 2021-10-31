@@ -92,6 +92,7 @@ jobs:
       run: |
         mkdir dist
         cp unripe-bison-app dist/
+        cp -R public/ dist/public/
         cp .github/workflows/app.sh dist/
         echo MODE=production >> dist/.env
         echo DATABASE_CONNECTION=${{ secrets.DATABASE_CONNECTION }} >> dist/.env
