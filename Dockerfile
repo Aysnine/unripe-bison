@@ -1,8 +1,4 @@
-FROM golang:alpine
-
-RUN mkdir /app
-
-ADD . /app/
+FROM golang:alpine AS build
 
 WORKDIR /app
 
@@ -11,7 +7,15 @@ COPY go.sum .
 
 RUN go mod download
 
-RUN go build -o main .
+ADD . /app/
+
+RUN go build -o /main .
+
+FROM alpine
+
+WORKDIR /
+
+COPY --from=build /main /main
 
 RUN adduser -S -D -H -h /app appuser
 USER appuser
