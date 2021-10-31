@@ -66,12 +66,8 @@ func Setup() *fiber.App {
 	// Custom Timing middleware
 	app.Use(middleware.ServerTiming())
 
-	// Register the index route with a simple
-	// "OK" response. It should return status
-	// code 200
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("OK")
-	})
+	// Static Home Page
+	app.Static("/", "./public")
 
 	// Extract single route
 	service.SetupApi_GetBooks(app, db)
