@@ -10,6 +10,9 @@ import (
 	"os"
 	"time"
 
+	"github.com/Aysnine/unripe-bison/internal/database"
+	"github.com/Aysnine/unripe-bison/internal/middleware"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
@@ -45,7 +48,7 @@ func Setup() *fiber.App {
 	start := time.Now()
 
 	// connext database
-	db := ConnectDB(os.Getenv("DATABASE_CONNECTION"))
+	db := database.ConnectPG(os.Getenv("DATABASE_CONNECTION"))
 
 	// Initialize a new app
 	app := fiber.New()
@@ -65,7 +68,7 @@ func Setup() *fiber.App {
 	app.Use(requestId.New())
 
 	// Custom Timing middleware
-	app.Use(ServerTiming())
+	app.Use(middleware.ServerTiming())
 
 	// Register the index route with a simple
 	// "OK" response. It should return status
@@ -224,43 +227,4 @@ func SetupApi_GetRandomAnimeImage(app *fiber.App) {
 
 		return nil
 	})
-}
-
-func ConnectDB(connString string) *pgx.Conn {
-	// Database connect timing
-	start := time.Now()
-
-	db, err := pgx.Connect(context.Background(), connString)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-
-	var greeting string
-	err = db.QueryRow(context.Background(), "select 'Database connected!'").Scan(&greeting)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
-		os.Exit(1)
-	}
-
-	// Database connect timing
-	stop := time.Now()
-	fmt.Println(fmt.Sprintf("[duration=%v] ", stop.Sub(start).String()) + greeting)
-
-	return db
-}
-
-// Will measure how long it takes before a response is returned
-func ServerTiming() fiber.Handler {
-	return func(ctx *fiber.Ctx) error {
-		start := time.Now()
-		err := ctx.Next()
-		stop := time.Now()
-
-		// Do something with response
-		ctx.Append("Server-Timing", fmt.Sprintf("app;duration=%v", stop.Sub(start).String()))
-
-		// return stack error if exist
-		return err
-	}
 }
