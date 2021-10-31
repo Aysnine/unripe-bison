@@ -7,7 +7,7 @@ COPY go.sum .
 
 RUN go mod download
 
-ADD . /app/
+COPY . .
 
 RUN go build -o /main .
 
@@ -16,6 +16,7 @@ FROM alpine
 WORKDIR /
 
 COPY --from=build /main /main
+COPY --from=build /app/public /public
 
 RUN adduser -S -D -H -h /app appuser
 USER appuser
