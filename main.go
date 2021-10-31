@@ -25,7 +25,11 @@ func main() {
 	// start the application
 	// ! must with `localhost` on MacOS
 	// ! https://medium.com/@leeprovoost/suppressing-accept-incoming-network-connections-warnings-on-osx-7665b33927ca
-	log.Fatal(app.Listen("localhost:9000"))
+	address := ":9000"
+	if os.Getenv("MODE") == "development" {
+		address = "localhost:9000"
+	}
+	log.Fatal(app.Listen(address))
 }
 
 // @title UnripeBison Server API
