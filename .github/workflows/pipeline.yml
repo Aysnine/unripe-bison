@@ -34,6 +34,43 @@ jobs:
         DATABASE_CONNECTION: ${{ secrets.DATABASE_CONNECTION }}
       run: go test ./...
 
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Get Previous tag
+        id: previousTag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 1.0.0 # Optional fallback tag to use when no tag can be found
+      -
+        name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: |
+            aysnine/unripe-bison:${{ steps.previousTag.outputs.tag }}
+            aysnine/unripe-bison:latest
+
   simple-build-and-deploy:
     needs: test
     if: ${{ startsWith(github.event.head_commit.message, 'chore(release)') || contains(github.event.head_commit.message, '[deploy]') }}
