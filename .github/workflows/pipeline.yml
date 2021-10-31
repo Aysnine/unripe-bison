@@ -56,6 +56,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
+        name: Login to Tencent Registry
+        uses: docker/login-action@v1 
+        with:
+          registry: ccr.ccs.tencentyun.com
+          username: ${{ secrets.TENCENT_USERNAME }}
+          password: ${{ secrets.TENCENT_TOKEN }}
+      -
         name: Get Previous tag
         id: previousTag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
@@ -70,6 +77,8 @@ jobs:
           tags: |
             aysnine/unripe-bison:${{ steps.previousTag.outputs.tag }}
             aysnine/unripe-bison:latest
+            ccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ steps.previousTag.outputs.tag }}
+            ccr.ccs.tencentyun.com/aysnine/unripe-bison:latest
 
   simple-build-and-deploy:
     needs: test
