@@ -11,7 +11,7 @@ COPY . .
 
 RUN go build -o main .
 
-FROM alpine
+FROM scratch
 
 WORKDIR /app
 
@@ -19,7 +19,5 @@ COPY --from=build /app/main /app/main
 COPY --from=build /app/public /app/public
 
 EXPOSE 9000
-
-USER nonroot:nonroot
 
 ENTRYPOINT ["/app/main"]
