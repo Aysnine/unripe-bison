@@ -36,6 +36,7 @@ jobs:
 
   docker:
     needs: test
+    if: ${{ startsWith(github.event.head_commit.message, 'chore(release)') || contains(github.event.head_commit.message, '[deploy]') }}
     runs-on: ubuntu-latest
     steps:
       -
@@ -79,41 +80,3 @@ jobs:
             aysnine/unripe-bison:latest
             hkccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ steps.previousTag.outputs.tag }}
             hkccr.ccs.tencentyun.com/aysnine/unripe-bison:latest
-
-  simple-build-and-deploy:
-    needs: test
-    if: ${{ startsWith(github.event.head_commit.message, 'chore(release)') || contains(github.event.head_commit.message, '[deploy]') }}
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: Install Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.17.x
-
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Build
-      run: go build -ldflags="-s -w" -o unripe-bison-app
-
-    - name: Copy dist folder
-      run: |
-        mkdir dist
-        cp unripe-bison-app dist/
-        cp -R public/ dist/public/
-        cp .github/workflows/app.sh dist/
-        echo MODE=production >> dist/.env
-        echo DATABASE_CONNECTION=${{ secrets.DATABASE_CONNECTION }} >> dist/.env
-
-    - uses: mdallasanta/ssh-scp-deploy@v1.1.0
-      with:
-        local: './dist/'                                             # Local file path - REQUIRED false - DEFAULT ./
-        remote: '~/'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
-        host: ${{secrets.DEPLOY_HOST}}                               # Remote server address - REQUIRED true
-        user: ${{secrets.DEPLOY_USER}}                               # Remote server user - REQUIRED true
-        password: ${{secrets.DEPLOY_PASSWORD}}                       # User password - REQUIRED at least one of "password" or "key" 
-        pre_upload: cd dist; ./app.sh stop
-        post_upload: cd dist; chmod u+x ./app.sh; ./app.sh restart
-        ssh_options: -o StrictHostKeyChecking=no
-        scp_options: -v
