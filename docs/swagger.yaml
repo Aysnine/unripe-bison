@@ -16,6 +16,11 @@ paths:
       produces:
       - application/json
       summary: books
+    post:
+      operationId: add-book
+      produces:
+      - application/json
+      summary: books
   /api/hongkong-weather:
     get:
       operationId: get-hongkong-weather

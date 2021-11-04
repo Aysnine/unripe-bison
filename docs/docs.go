@@ -36,6 +36,13 @@ var doc = `{
                 ],
                 "summary": "books",
                 "operationId": "get-books"
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "books",
+                "operationId": "add-book"
             }
         },
         "/api/hongkong-weather": {

@@ -75,6 +75,7 @@ func Setup() *fiber.App {
 
 	// Extract single route
 	service.SetupApi_GetBooks(app, db)
+	service.SetupApi_AddBook(app, db)
 	service.SetupApi_GetHongKongWeather(app)
 	service.SetupApi_GetRandomAnimeImage(app)
 
