@@ -30,7 +30,7 @@ func SetupApi_GetBooks(app *fiber.App, db *pgx.Conn) {
 		defer rows.Close()
 
 		stop := time.Now()
-		ctx.Append("Server-Timing", fmt.Sprintf("db;query=%v", stop.Sub(start).String()))
+		ctx.Append("Server-Timing", fmt.Sprintf("sql;query=%v", stop.Sub(start).String()))
 
 		// * Marshaling
 
@@ -80,7 +80,7 @@ func SetupApi_AddBook(app *fiber.App, db *pgx.Conn) {
 		defer rows.Close()
 
 		stop := time.Now()
-		ctx.Append("Server-Timing", fmt.Sprintf("db;query=%v", stop.Sub(start).String()))
+		ctx.Append("Server-Timing", fmt.Sprintf("sql;insert=%v", stop.Sub(start).String()))
 
 		// * Marshaling
 
