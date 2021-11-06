@@ -80,3 +80,4 @@ yarn release
 - [A Complete Guide to JSON in Golang (With Examples)](https://www.sohamkamani.com/golang/json/)
 - [Go 语言中的面向对象](http://kangkona.github.io/oo-in-golang/)
 - [Go 语言高性能编程](https://github.com/geektutu/high-performance-go)
+- [Error handling and go](https://go.dev/blog/error-handling-and-go)
