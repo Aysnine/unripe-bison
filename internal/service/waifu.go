@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/utils"
 )
 
 // GetRandomAnimeImage godoc
@@ -17,13 +18,20 @@ import (
 // @Router /api/random-anime-image [get]
 func SetupApi_GetRandomAnimeImage(app *fiber.App) {
 	// Request other server
-	app.Get("/api/random-anime-image", func(ctx *fiber.Ctx) error {
+	app.Get("/api/random-anime-image/*", func(ctx *fiber.Ctx) error {
+
+		// * Params
+		rawPath := utils.ImmutableString(ctx.Params("*"))
+
+		if len(rawPath) == 0 {
+			rawPath = "sfw/neko"
+		}
 
 		// * Request
 
 		restStart := time.Now()
 
-		restResponse, restErr := http.Get("https://api.waifu.pics/sfw/neko")
+		restResponse, restErr := http.Get("https://api.waifu.pics/" + rawPath)
 		if restErr != nil {
 			return ctx.Status(500).SendString(restErr.Error())
 		}
