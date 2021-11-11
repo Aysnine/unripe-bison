@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.7](https://github.com/Aysnine/unripe-bison/compare/v0.3.6...v0.3.7) (2021-11-11)
+
+
+### Features
+
+* **api:** add book with name ([f78dfb1](https://github.com/Aysnine/unripe-bison/commit/f78dfb1385f45eb26f14b008f5389023a3a5594e))
+* **api:** random anime image with raw path ([b46a294](https://github.com/Aysnine/unripe-bison/commit/b46a2948862792a30c9bef45acf126e8fbd6762c))
+
 ### [0.3.6](https://github.com/Aysnine/unripe-bison/compare/v0.3.5...v0.3.6) (2021-11-03)
 
 ### [0.3.5](https://github.com/Aysnine/unripe-bison/compare/v0.3.4...v0.3.5) (2021-11-02)
