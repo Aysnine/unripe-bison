@@ -2,7 +2,7 @@
 
 *Web server example by GoFiber⚡️ and CockroachDB📖. Just a random project name😜.*
 
-**🎉🎉🎉 Online DEMO: https://unripe-bison.cnine.me**
+**🎉🎉🎉 Online DEMO (Kubernetes): https://unripe-bison.cnine.me**
 
 ``` bash
 # You can try this
