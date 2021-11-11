@@ -38,6 +38,8 @@ jobs:
     needs: test
     if: ${{ startsWith(github.event.head_commit.message, 'chore(release)') || contains(github.event.head_commit.message, '[deploy]') }}
     runs-on: ubuntu-latest
+    outputs:
+      latestVersion: ${{ steps.previousTag.outputs.tag }}
     steps:
       -
         name: Checkout
@@ -123,7 +125,7 @@ jobs:
                         key: unripe-bison-database
                         name: unripe-bison-database
                         optional: false
-                  image: hkccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ steps.previousTag.outputs.tag }}
+                  image: hkccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ needs.docker.outputs.latestVersion }}
                   imagePullPolicy: IfNotPresent
                   name: unripe-bison-server
                   resources:
