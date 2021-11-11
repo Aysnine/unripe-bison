@@ -80,3 +80,73 @@ jobs:
             aysnine/unripe-bison:latest
             hkccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ steps.previousTag.outputs.tag }}
             hkccr.ccs.tencentyun.com/aysnine/unripe-bison:latest
+
+  deploy:
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions-hub/kubectl@v1.21.2
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+
+      - name: Deploy file
+        run: |
+          cat <<EOT3 > ./deploy.yaml
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: unripe-bison
+          spec:
+            progressDeadlineSeconds: 600
+            replicas: 2
+            revisionHistoryLimit: 10
+            selector:
+              matchLabels:
+                k8s-app: unripe-bison
+                qcloud-app: unripe-bison
+            strategy:
+              rollingUpdate:
+                maxSurge: 1
+                maxUnavailable: 0
+              type: RollingUpdate
+            template:
+              metadata:
+                labels:
+                  k8s-app: unripe-bison
+                  qcloud-app: unripe-bison
+              spec:
+                containers:
+                - env:
+                  - name: DATABASE_CONNECTION
+                    valueFrom:
+                      secretKeyRef:
+                        key: unripe-bison-database
+                        name: unripe-bison-database
+                        optional: false
+                  image: hkccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ steps.previousTag.outputs.tag }}
+                  imagePullPolicy: IfNotPresent
+                  name: unripe-bison-server
+                  resources:
+                    limits:
+                      cpu: 100m
+                      memory: 64Mi
+                    requests:
+                      cpu: 10m
+                      memory: 64Mi
+                  securityContext:
+                    privileged: false
+                  terminationMessagePath: /dev/termination-log
+                  terminationMessagePolicy: File
+                dnsPolicy: ClusterFirst
+                imagePullSecrets:
+                - name: qcloudregistrykey
+                restartPolicy: Always
+                schedulerName: default-scheduler
+                securityContext: {}
+                terminationGracePeriodSeconds: 30
+          EOT3
+          cat ./deploy.yaml
+
+      - uses: actions-hub/kubectl@v1.21.2
+        with:
+          args: apply -f deploy.yaml
