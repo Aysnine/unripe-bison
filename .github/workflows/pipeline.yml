@@ -34,7 +34,7 @@ jobs:
         DATABASE_CONNECTION: ${{ secrets.DATABASE_CONNECTION }}
       run: go test ./...
 
-  docker:
+  integration:
     needs: test
     if: ${{ startsWith(github.event.head_commit.message, 'chore(release)') || contains(github.event.head_commit.message, '[deploy]') }}
     runs-on: ubuntu-latest
@@ -83,17 +83,17 @@ jobs:
             hkccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ steps.previousTag.outputs.tag }}
             hkccr.ccs.tencentyun.com/aysnine/unripe-bison:latest
 
-  deploy:
-    needs: docker
+  deployment:
+    needs: integration
     runs-on: ubuntu-latest
     steps:
       - uses: actions-hub/kubectl@v1.21.2
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
 
-      - name: Deploy file
+      - name: Generate k8s deployment file
         run: |
-          cat <<EOT3 > ./deploy.yaml
+          cat <<EOT3 > ./deployment.yaml
           apiVersion: apps/v1
           kind: Deployment
           metadata:
@@ -125,7 +125,7 @@ jobs:
                         key: unripe-bison-database
                         name: unripe-bison-database
                         optional: false
-                  image: hkccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ needs.docker.outputs.latestVersion }}
+                  image: hkccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ needs.integration.outputs.latestVersion }}
                   imagePullPolicy: IfNotPresent
                   name: unripe-bison-server
                   resources:
@@ -147,8 +147,8 @@ jobs:
                 securityContext: {}
                 terminationGracePeriodSeconds: 30
           EOT3
-          cat ./deploy.yaml
+          cat ./deployment.yaml
 
       - uses: actions-hub/kubectl@v1.21.2
         with:
-          args: apply -f deploy.yaml
+          args: apply -f deployment.yaml
