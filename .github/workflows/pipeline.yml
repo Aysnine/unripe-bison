@@ -73,7 +73,7 @@ jobs:
           fallback: 1.0.0 # Optional fallback tag to use when no tag can be found
       -
         name: Build and push
-        id: docker_build
+        if: ${{ startsWith(github.event.head_commit.message, 'chore(release)') }}
         uses: docker/build-push-action@v2
         with:
           push: true
