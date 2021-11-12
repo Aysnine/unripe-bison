@@ -38,7 +38,7 @@ MODE=development
 DATABASE_CONNECTION=postgresql://your-database-connection-string-here
 ```
 
-- MODE = `development` | `production`
+- MODE = `local` | `development` | `production`
 
 Command:
 

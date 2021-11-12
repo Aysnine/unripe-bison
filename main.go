@@ -27,7 +27,7 @@ func main() {
 	// ! must with `localhost` on MacOS
 	// ! https://medium.com/@leeprovoost/suppressing-accept-incoming-network-connections-warnings-on-osx-7665b33927ca
 	address := ":9000"
-	if os.Getenv("MODE") == "development" {
+	if os.Getenv("MODE") == "local" {
 		address = "localhost:9000"
 	}
 	log.Fatal(app.Listen(address))
@@ -60,7 +60,7 @@ func Setup() *fiber.App {
 	// Swagger document
 	app.Static("/swagger/doc.json", "./docs/swagger.json")
 
-	if os.Getenv("MODE") == "development" {
+	if os.Getenv("MODE") == "local" || os.Getenv("MODE") == "development" {
 		// Default middleware config
 		app.Use(logger.New())
 	}
