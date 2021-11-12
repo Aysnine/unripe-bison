@@ -1,6 +1,6 @@
 {
   "name": "unripe-bison",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "description": "Web server example by GoFiber⚡️ and CockroachDB📖",
   "main": "index.js",
   "repository": "https://github.com/Aysnine/unripe-bison.git",
