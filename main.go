@@ -54,22 +54,23 @@ func Setup() *fiber.App {
 	// Initialize a new app
 	app := fiber.New()
 
-	// Web monitor
-	app.Get("/monitor", monitor.New())
-
-	// Swagger document
-	app.Static("/swagger/doc.json", "./docs/swagger.json")
-
 	if os.Getenv("MODE") == "local" || os.Getenv("MODE") == "development" {
+
+		// Web monitor
+		app.Get("/monitor", monitor.New())
+
+		// Swagger document
+		app.Static("/swagger/doc.json", "./docs/swagger.json")
+
 		// Default middleware config
 		app.Use(logger.New())
+
+		// Custom Timing middleware
+		app.Use(middleware.ServerTiming())
 	}
 
 	// Default middleware config
 	app.Use(requestId.New())
-
-	// Custom Timing middleware
-	app.Use(middleware.ServerTiming())
 
 	// Static Home Page
 	app.Static("/", "./public")
