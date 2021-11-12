@@ -7,7 +7,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/utils"
-	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 
 // GetBooks godoc
@@ -15,7 +15,7 @@ import (
 // @ID get-books
 // @Produce  json
 // @Router /api/books [get]
-func SetupApi_GetBooks(app *fiber.App, db *pgx.Conn) {
+func SetupApi_GetBooks(app *fiber.App, db *pgxpool.Pool) {
 	// Get books JSON response
 	app.Get("/api/books", func(ctx *fiber.Ctx) error {
 
@@ -63,7 +63,7 @@ func SetupApi_GetBooks(app *fiber.App, db *pgx.Conn) {
 // @ID add-book
 // @Produce  json
 // @Router /api/books [post]
-func SetupApi_AddBook(app *fiber.App, db *pgx.Conn) {
+func SetupApi_AddBook(app *fiber.App, db *pgxpool.Pool) {
 	// Add a book
 	app.Post("/api/books", func(ctx *fiber.Ctx) error {
 		// * Params

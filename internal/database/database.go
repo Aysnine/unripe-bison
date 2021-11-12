@@ -6,14 +6,14 @@ import (
 	"os"
 	"time"
 
-	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-func ConnectPG(connString string) *pgx.Conn {
+func ConnectPG(connString string) *pgxpool.Pool {
 	// Database connect timing
 	start := time.Now()
 
-	db, err := pgx.Connect(context.Background(), connString)
+	db, err := pgxpool.Connect(context.Background(), connString)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
