@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/Aysnine/unripe-bison/internal/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/utils"
-	"github.com/jackc/pgx/v4/pgxpool"
 )
 
 // GetBooks godoc
@@ -15,7 +15,10 @@ import (
 // @ID get-books
 // @Produce  json
 // @Router /api/books [get]
-func SetupApi_GetBooks(app *fiber.App, db *pgxpool.Pool) {
+func SetupApi_GetBooks(setup *types.SetupContext) {
+	app := setup.App
+	db := setup.DB
+
 	// Get books JSON response
 	app.Get("/api/books", func(ctx *fiber.Ctx) error {
 
@@ -63,7 +66,10 @@ func SetupApi_GetBooks(app *fiber.App, db *pgxpool.Pool) {
 // @ID add-book
 // @Produce  json
 // @Router /api/books [post]
-func SetupApi_AddBook(app *fiber.App, db *pgxpool.Pool) {
+func SetupApi_AddBook(setup *types.SetupContext) {
+	app := setup.App
+	db := setup.DB
+
 	// Add a book
 	app.Post("/api/books", func(ctx *fiber.Ctx) error {
 		// * Params

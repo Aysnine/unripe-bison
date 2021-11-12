@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Aysnine/unripe-bison/internal/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/utils"
 )
@@ -16,7 +17,9 @@ import (
 // @ID get-random-anime-image
 // @Produce  json
 // @Router /api/random-anime-image [get]
-func SetupApi_GetRandomAnimeImage(app *fiber.App) {
+func SetupApi_GetRandomAnimeImage(setup *types.SetupContext) {
+	app := setup.App
+
 	// Request other server
 	app.Get("/api/random-anime-image/*", func(ctx *fiber.Ctx) error {
 

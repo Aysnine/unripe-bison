@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Aysnine/unripe-bison/internal/types"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -15,7 +16,9 @@ import (
 // @ID get-hongkong-weather
 // @Produce  json
 // @Router /api/hongkong-weather [get]
-func SetupApi_GetHongKongWeather(app *fiber.App) {
+func SetupApi_GetHongKongWeather(setup *types.SetupContext) {
+	app := setup.App
+
 	// Request other server
 	app.Get("/api/hongkong-weather", func(ctx *fiber.Ctx) error {
 

@@ -9,6 +9,7 @@ import (
 	"github.com/Aysnine/unripe-bison/internal/database"
 	"github.com/Aysnine/unripe-bison/internal/middleware"
 	"github.com/Aysnine/unripe-bison/internal/service"
+	"github.com/Aysnine/unripe-bison/internal/types"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -73,11 +74,14 @@ func Setup() *fiber.App {
 	// Static Home Page
 	app.Static("/", "./public")
 
+	// Ready setup context
+	setupContext := &types.SetupContext{App: app, DB: db}
+
 	// Extract single route
-	service.SetupApi_GetBooks(app, db)
-	service.SetupApi_AddBook(app, db)
-	service.SetupApi_GetHongKongWeather(app)
-	service.SetupApi_GetRandomAnimeImage(app)
+	service.SetupApi_GetBooks(setupContext)
+	service.SetupApi_AddBook(setupContext)
+	service.SetupApi_GetHongKongWeather(setupContext)
+	service.SetupApi_GetRandomAnimeImage(setupContext)
 
 	// App setup timing
 	stop := time.Now()
