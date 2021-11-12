@@ -119,6 +119,8 @@ jobs:
               spec:
                 containers:
                 - env:
+                  - name: MODE
+                    value: development
                   - name: DATABASE_CONNECTION
                     valueFrom:
                       secretKeyRef:
