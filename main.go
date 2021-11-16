@@ -83,6 +83,7 @@ func Setup() *fiber.App {
 	service.SetupApi_AddBook(setupContext)
 	service.SetupApi_GetHongKongWeather(setupContext)
 	service.SetupApi_GetRandomAnimeImage(setupContext)
+	service.SetupWebsocket_Chat(setupContext)
 
 	// App setup timing
 	stop := time.Now()
