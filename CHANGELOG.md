@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/Aysnine/unripe-bison/compare/v0.3.10...v0.4.0) (2021-11-17)
+
+
+### Features
+
+* chat by websocket ([8965ab3](https://github.com/Aysnine/unripe-bison/commit/8965ab3eb14c8071cd2e75377a66325161e3006e))
+* chat with nickname ([fd8bac8](https://github.com/Aysnine/unripe-bison/commit/fd8bac879a62b83b100cbf7f9150455965e31bf6))
+
 ### [0.3.10](https://github.com/Aysnine/unripe-bison/compare/v0.3.9...v0.3.10) (2021-11-12)
 
 ### [0.3.9](https://github.com/Aysnine/unripe-bison/compare/v0.3.8...v0.3.9) (2021-11-12)
