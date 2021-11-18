@@ -81,3 +81,5 @@ yarn release
 - [Go 语言中的面向对象](http://kangkona.github.io/oo-in-golang/)
 - [Go 语言高性能编程](https://github.com/geektutu/high-performance-go)
 - [Error handling and go](https://go.dev/blog/error-handling-and-go)
+- [Scaling Websockets in the Cloud (Part 1). From Socket.io and Redis to a distributed architecture with Docker and Kubernetes](https://dev.to/sw360cab/scaling-websockets-in-the-cloud-part-1-from-socket-io-and-redis-to-a-distributed-architecture-with-docker-and-kubernetes-17n3)
+- [Scaling websockets](https://github.com/sw360cab/websockets-scaling)
