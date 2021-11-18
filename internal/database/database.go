@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/gofiber/storage/redis"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
@@ -31,4 +32,20 @@ func ConnectPG(connString string) *pgxpool.Pool {
 	fmt.Println(fmt.Sprintf("[duration=%v] ", stop.Sub(start).String()) + greeting)
 
 	return db
+}
+
+func ConnectRedis(connString string) *redis.Storage {
+	// Database connect timing
+	start := time.Now()
+
+	store := redis.New(redis.Config{
+		URL:   connString,
+		Reset: false,
+	})
+
+	// Database connect timing
+	stop := time.Now()
+	fmt.Println(fmt.Sprintf("[duration=%v] ", stop.Sub(start).String()) + "redis item connected!")
+
+	return store
 }

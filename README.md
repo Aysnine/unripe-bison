@@ -36,6 +36,7 @@ Add `.env` file and set variables:
 ``` bash
 MODE=development
 DATABASE_CONNECTION=postgresql://your-database-connection-string-here
+CHAT_STORE_CONNECTION=redis://your-redis-connection-string-here
 ```
 
 - MODE = `local` | `development` | `production`

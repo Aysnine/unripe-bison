@@ -51,6 +51,9 @@ func Setup() *fiber.App {
 	// connext database
 	db := database.ConnectPG(os.Getenv("DATABASE_CONNECTION"))
 
+	// connext chat store
+	chatStore := database.ConnectRedis(os.Getenv("CHAT_STORE_CONNECTION"))
+
 	// Initialize a new app
 	app := fiber.New()
 
@@ -76,7 +79,7 @@ func Setup() *fiber.App {
 	app.Static("/", "./public")
 
 	// Ready setup context
-	setupContext := &types.SetupContext{App: app, DB: db}
+	setupContext := &types.SetupContext{App: app, DB: db, ChatStore: chatStore}
 
 	// Extract single route
 	service.SetupApi_GetBooks(setupContext)
