@@ -121,6 +121,8 @@ jobs:
                 - env:
                   - name: MODE
                     value: development
+                  - name: CHAT_REDIS_CONNECTION
+                    value: redis://unripe-bison-redis:6379/1
                   - name: DATABASE_CONNECTION
                     valueFrom:
                       secretKeyRef:
