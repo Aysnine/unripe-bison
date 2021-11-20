@@ -29,6 +29,7 @@ func main() {
 
 	// connect chat redis
 	chatRedis := database.ConnectRedis(os.Getenv("CHAT_REDIS_CONNECTION"))
+	defer chatRedis.Close()
 
 	// Initialize a new app
 	app := fiber.New()
@@ -52,6 +53,9 @@ func main() {
 		address = "localhost:9000"
 	}
 	log.Fatal(setupApp.Listen(address))
+
+	// TODO merge with database connect
+	defer setupContext.DB.Close()
 }
 
 // @title UnripeBison Server API
