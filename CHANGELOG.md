@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/Aysnine/unripe-bison/compare/v0.4.0...v0.4.1) (2021-11-20)
+
+
+### Bug Fixes
+
+* distributed chat ([def7e04](https://github.com/Aysnine/unripe-bison/commit/def7e04bdda33d87d7a9f9a964140b742bd47447))
+
 ## [0.4.0](https://github.com/Aysnine/unripe-bison/compare/v0.3.10...v0.4.0) (2021-11-17)
 
 
