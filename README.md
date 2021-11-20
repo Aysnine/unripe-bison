@@ -10,6 +10,9 @@ curl https://unripe-bison.cnine.me/api/books
 
 # Performance testing eg 233 times
 curl https://unripe-bison.cnine.me/api/books\?_times\=\[0-233\] -w "%{http_code} total:%{time_total}s size:%{size_download}\n" -o /dev/null -s
+
+# Websocket global chat by https://github.com/vi/websocat
+websocat "wss://unripe-bison.cnine.me/chat?nickname=Jerry"
 ```
 
 Docs References
