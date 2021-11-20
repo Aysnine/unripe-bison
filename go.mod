@@ -22,7 +22,6 @@ require (
 	github.com/go-openapi/jsonreference v0.19.6 // indirect
 	github.com/go-openapi/spec v0.20.4 // indirect
 	github.com/go-openapi/swag v0.19.15 // indirect
-	github.com/golang/mock v1.5.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/savsgio/gotils v0.0.0-20210921075833-21a6215cb0e4 // indirect
@@ -37,7 +36,7 @@ require (
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/driftprogramming/pgxpoolmock v1.1.0
+	github.com/go-redis/redismock/v8 v8.0.6
 	github.com/gofiber/websocket/v2 v2.0.13
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.10.0 // indirect

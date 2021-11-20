@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"log"
 
 	"github.com/Aysnine/unripe-bison/internal/types"
@@ -9,23 +10,44 @@ import (
 	"github.com/gofiber/websocket/v2"
 )
 
-type client struct {
+type Client struct {
 	nickname string
-	// Add more data to this type if needed
 }
 
-type chatMessage struct {
+type IntoMessage struct {
 	connection *websocket.Conn
 	content    string
 }
 
-var clients = make(map[*websocket.Conn]client) // Note: although large maps with pointer-like types (e.g. strings) as keys are slow, using pointers themselves as keys is acceptable and fast
+type SendMessage struct {
+	channel string
+	content string
+}
+
+var clients = make(map[*websocket.Conn]Client) // Note: although large maps with pointer-like types (e.g. strings) as keys are slow, using pointers themselves as keys is acceptable and fast
 var register = make(chan *websocket.Conn)
 var unregister = make(chan *websocket.Conn)
-var chat = make(chan *chatMessage)
+var into = make(chan *IntoMessage)
+var send = make(chan *SendMessage)
 
 func runHub(setupContext *types.SetupContext) {
-	// chatRedis := setupContext.ChatRedis
+	chatRedis := setupContext.ChatRedis
+
+	// There is no error because go-redis automatically reconnects on error.
+	pubsub := chatRedis.Subscribe(context.Background(), "channel:global")
+	// Close the subscription when we are done.
+	defer pubsub.Close()
+
+	// Receive pub messages
+	go func() {
+		for {
+			msg, err := pubsub.ReceiveMessage(context.Background())
+			if err != nil {
+				log.Println("receive redis pub error:", err)
+			}
+			send <- &SendMessage{channel: msg.Channel, content: msg.Payload}
+		}
+	}()
 
 	for {
 		select {
@@ -35,14 +57,28 @@ func runHub(setupContext *types.SetupContext) {
 				nickname = "anonymous"
 			}
 
-			clients[connection] = client{nickname}
+			client := Client{nickname}
+
+			clients[connection] = client
 
 			log.Printf("[join] %v", nickname)
 
-		case message := <-chat:
-			nickname := clients[message.connection].nickname
-			log.Printf("[message] %v: %v", nickname, message.content)
+			err := chatRedis.Publish(context.Background(), "channel:global", string("["+client.nickname+"] 🔵")).Err()
+			if err != nil {
+				log.Println("redis publish error:", err)
+			}
 
+		case message := <-into:
+			client := clients[message.connection]
+
+			log.Printf("[into message] %v: %v", client.nickname, message.content)
+
+			err := chatRedis.Publish(context.Background(), "channel:global", string("["+client.nickname+"] 💬 "+message.content)).Err()
+			if err != nil {
+				log.Println("redis publish error:", err)
+			}
+
+		case message := <-send:
 			// Send the message to all clients
 			for connection := range clients {
 				err := connection.WriteMessage(websocket.TextMessage, []byte(message.content))
@@ -56,12 +92,17 @@ func runHub(setupContext *types.SetupContext) {
 			}
 
 		case connection := <-unregister:
-			nickname := clients[connection].nickname
+			client := clients[connection]
 
 			// Remove the client from the hub
 			delete(clients, connection)
 
-			log.Printf("[leave] %v", nickname)
+			log.Printf("[leave] %v", client.nickname)
+
+			err := chatRedis.Publish(context.Background(), "channel:global", string("["+client.nickname+"] 🔴")).Err()
+			if err != nil {
+				log.Println("redis publish error:", err)
+			}
 		}
 	}
 }
@@ -105,7 +146,7 @@ func SetupWebsocket_Chat(setupContext *types.SetupContext) {
 
 			if messageType == websocket.TextMessage {
 				// Broadcast the received message
-				chat <- &chatMessage{connection: connection, content: string(messageContent)}
+				into <- &IntoMessage{connection: connection, content: string(messageContent)}
 			} else {
 				log.Println("websocket message received of type", messageType)
 			}
