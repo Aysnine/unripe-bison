@@ -122,7 +122,10 @@ func SetupWebsocket_Chat(setupContext *types.SetupContext) {
 		return c.SendStatus(fiber.StatusUpgradeRequired)
 	})
 
-	go runHub(setupContext)
+	// TODO remove condition when test mocked
+	if setupContext.ChatRedis != nil {
+		go runHub(setupContext)
+	}
 
 	app.Get("/chat", websocket.New(func(connection *websocket.Conn) {
 		// When the function returns, unregister the client and close the connection

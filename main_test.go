@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/Aysnine/unripe-bison/internal/types"
-	"github.com/go-redis/redismock/v8"
 	"github.com/gofiber/fiber/v2"
 	"github.com/pashagolub/pgxmock"
 	"github.com/stretchr/testify/assert"
@@ -45,10 +44,8 @@ func TestIndexRoute(t *testing.T) {
 	}
 
 	// Setup the app as it is done in the main function
-	db, _ := redismock.NewClientMock()
 	app := Setup(&types.SetupContext{
-		App:       fiber.New(),
-		ChatRedis: db,
+		App: fiber.New(),
 	})
 
 	// Iterate through test single test cases
@@ -99,10 +96,8 @@ func TestApiBooksRoute(t *testing.T) {
 	}
 	defer mock.Close()
 
-	db, _ := redismock.NewClientMock()
 	app := Setup(&types.SetupContext{
-		App:       fiber.New(),
-		ChatRedis: db,
+		App: fiber.New(),
 	})
 
 	req, _ := http.NewRequest("GET", "/api/books", nil)
@@ -113,10 +108,8 @@ func TestApiBooksRoute(t *testing.T) {
 }
 
 func TestHongKongWeatherRoute(t *testing.T) {
-	db, _ := redismock.NewClientMock()
 	app := Setup(&types.SetupContext{
-		App:       fiber.New(),
-		ChatRedis: db,
+		App: fiber.New(),
 	})
 
 	req, _ := http.NewRequest("GET", "/api/hongkong-weather", nil)
@@ -127,10 +120,8 @@ func TestHongKongWeatherRoute(t *testing.T) {
 }
 
 func TestRandomAnimeImageRoute(t *testing.T) {
-	db, _ := redismock.NewClientMock()
 	app := Setup(&types.SetupContext{
-		App:       fiber.New(),
-		ChatRedis: db,
+		App: fiber.New(),
 	})
 
 	req, _ := http.NewRequest("GET", "/api/random-anime-image", nil)
