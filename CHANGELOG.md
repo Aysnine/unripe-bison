@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.2](https://github.com/Aysnine/unripe-bison/compare/v0.4.1...v0.4.2) (2021-11-20)
+
+
+### Bug Fixes
+
+* setup condition ([b532a76](https://github.com/Aysnine/unripe-bison/commit/b532a76369be6f3507b94a34a8ce39ae70f8ad27))
+
 ### [0.4.1](https://github.com/Aysnine/unripe-bison/compare/v0.4.0...v0.4.1) (2021-11-20)
 
 
