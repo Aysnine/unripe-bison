@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/gofiber/storage/redis"
+	"github.com/go-redis/redis/v8"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
@@ -21,7 +21,7 @@ func ConnectPG(connString string) *pgxpool.Pool {
 	}
 
 	var greeting string
-	err = db.QueryRow(context.Background(), "select 'Database connected!'").Scan(&greeting)
+	err = db.QueryRow(context.Background(), "select 'Database item connected!'").Scan(&greeting)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
 		os.Exit(1)
@@ -34,18 +34,21 @@ func ConnectPG(connString string) *pgxpool.Pool {
 	return db
 }
 
-func ConnectRedis(connString string) *redis.Storage {
+func ConnectRedis(connString string) *redis.Client {
 	// Database connect timing
 	start := time.Now()
 
-	store := redis.New(redis.Config{
-		URL:   connString,
-		Reset: false,
-	})
+	opt, err := redis.ParseURL(connString)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Redis ParseURL failed: %v\n", err)
+		os.Exit(1)
+	}
+
+	store := redis.NewClient(opt)
 
 	// Database connect timing
 	stop := time.Now()
-	fmt.Println(fmt.Sprintf("[duration=%v] ", stop.Sub(start).String()) + "redis item connected!")
+	fmt.Println(fmt.Sprintf("[duration=%v] ", stop.Sub(start).String()) + "Redis item connected!")
 
 	return store
 }

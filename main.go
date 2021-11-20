@@ -18,10 +18,31 @@ import (
 	"github.com/joho/godotenv"
 )
 
+func init() {
+	// Ready env
+	godotenv.Load(".env")
+}
+
 func main() {
+	// App ready timing
+	start := time.Now()
+
+	// connect chat redis
+	chatRedis := database.ConnectRedis(os.Getenv("CHAT_REDIS_CONNECTION"))
+
+	// Initialize a new app
+	app := fiber.New()
+
+	// Ready setup context
+	setupContext := &types.SetupContext{App: app, ChatRedis: chatRedis}
+
+	// App ready timing
+	stop := time.Now()
+	fmt.Println(fmt.Sprintf("[duration=%v] ", stop.Sub(start).String()) + "Env ready done!")
+
 	// Use an external setup function in order
 	// to configure the app in tests as well
-	app := Setup()
+	setupApp := Setup(setupContext)
 
 	// start the application
 	// ! must with `localhost` on MacOS
@@ -30,7 +51,7 @@ func main() {
 	if os.Getenv("MODE") == "local" {
 		address = "localhost:9000"
 	}
-	log.Fatal(app.Listen(address))
+	log.Fatal(setupApp.Listen(address))
 }
 
 // @title UnripeBison Server API
@@ -41,21 +62,16 @@ func main() {
 // @license.name MIT
 // @host unripe-bison.cnine.me
 // @BasePath /
-func Setup() *fiber.App {
-	// Ready env
-	godotenv.Load(".env")
+func Setup(setupContext *types.SetupContext) *fiber.App {
+	// TODO move out when use mock
+	// connect database
+	db := database.ConnectPG(os.Getenv("DATABASE_CONNECTION"))
+	setupContext.DB = db
+
+	app := setupContext.App
 
 	// App setup timing
 	start := time.Now()
-
-	// connext database
-	db := database.ConnectPG(os.Getenv("DATABASE_CONNECTION"))
-
-	// connext chat store
-	chatStore := database.ConnectRedis(os.Getenv("CHAT_STORE_CONNECTION"))
-
-	// Initialize a new app
-	app := fiber.New()
 
 	if os.Getenv("MODE") == "local" || os.Getenv("MODE") == "development" {
 
@@ -77,9 +93,6 @@ func Setup() *fiber.App {
 
 	// Static Home Page
 	app.Static("/", "./public")
-
-	// Ready setup context
-	setupContext := &types.SetupContext{App: app, DB: db, ChatStore: chatStore}
 
 	// Extract single route
 	service.SetupApi_GetBooks(setupContext)

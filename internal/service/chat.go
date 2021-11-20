@@ -24,7 +24,9 @@ var register = make(chan *websocket.Conn)
 var unregister = make(chan *websocket.Conn)
 var chat = make(chan *chatMessage)
 
-func runHub() {
+func runHub(setupContext *types.SetupContext) {
+	// chatRedis := setupContext.ChatRedis
+
 	for {
 		select {
 		case connection := <-register:
@@ -69,8 +71,8 @@ func runHub() {
 // @ID chat
 // @Produce  websocket
 // @Router /chat [get]
-func SetupWebsocket_Chat(setup *types.SetupContext) {
-	app := setup.App
+func SetupWebsocket_Chat(setupContext *types.SetupContext) {
+	app := setupContext.App
 
 	app.Use("/chat", func(c *fiber.Ctx) error {
 		if websocket.IsWebSocketUpgrade(c) { // Returns true if the client requested upgrade to the WebSocket protocol
@@ -79,7 +81,7 @@ func SetupWebsocket_Chat(setup *types.SetupContext) {
 		return c.SendStatus(fiber.StatusUpgradeRequired)
 	})
 
-	go runHub()
+	go runHub(setupContext)
 
 	app.Get("/chat", websocket.New(func(connection *websocket.Conn) {
 		// When the function returns, unregister the client and close the connection

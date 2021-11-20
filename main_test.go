@@ -5,6 +5,9 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/Aysnine/unripe-bison/internal/types"
+	"github.com/gofiber/fiber/v2"
+	"github.com/pashagolub/pgxmock"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -41,7 +44,9 @@ func TestIndexRoute(t *testing.T) {
 	}
 
 	// Setup the app as it is done in the main function
-	app := Setup()
+	app := Setup(&types.SetupContext{
+		App: fiber.New(),
+	})
 
 	// Iterate through test single test cases
 	for _, test := range tests {
@@ -84,7 +89,16 @@ func TestIndexRoute(t *testing.T) {
 }
 
 func TestApiBooksRoute(t *testing.T) {
-	app := Setup()
+	t.Parallel()
+	mock, err := pgxmock.NewPool()
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
+	defer mock.Close()
+
+	app := Setup(&types.SetupContext{
+		App: fiber.New(),
+	})
 
 	req, _ := http.NewRequest("GET", "/api/books", nil)
 	res, err := app.Test(req, -1)
@@ -94,7 +108,9 @@ func TestApiBooksRoute(t *testing.T) {
 }
 
 func TestHongKongWeatherRoute(t *testing.T) {
-	app := Setup()
+	app := Setup(&types.SetupContext{
+		App: fiber.New(),
+	})
 
 	req, _ := http.NewRequest("GET", "/api/hongkong-weather", nil)
 	res, err := app.Test(req, -1)
@@ -104,7 +120,9 @@ func TestHongKongWeatherRoute(t *testing.T) {
 }
 
 func TestRandomAnimeImageRoute(t *testing.T) {
-	app := Setup()
+	app := Setup(&types.SetupContext{
+		App: fiber.New(),
+	})
 
 	req, _ := http.NewRequest("GET", "/api/random-anime-image", nil)
 	res, err := app.Test(req, -1)

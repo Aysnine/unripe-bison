@@ -3,8 +3,8 @@ module github.com/Aysnine/unripe-bison
 go 1.17
 
 require (
+	github.com/go-redis/redis/v8 v8.9.0
 	github.com/gofiber/fiber/v2 v2.22.0
-	github.com/gofiber/storage/redis v0.0.0-20211117053443-4a3096149ebb
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/joho/godotenv v1.4.0
 	github.com/stretchr/testify v1.7.0
@@ -22,7 +22,7 @@ require (
 	github.com/go-openapi/jsonreference v0.19.6 // indirect
 	github.com/go-openapi/spec v0.20.4 // indirect
 	github.com/go-openapi/swag v0.19.15 // indirect
-	github.com/go-redis/redis/v8 v8.9.0 // indirect
+	github.com/golang/mock v1.5.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/savsgio/gotils v0.0.0-20210921075833-21a6215cb0e4 // indirect
@@ -37,6 +37,7 @@ require (
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/driftprogramming/pgxpoolmock v1.1.0
 	github.com/gofiber/websocket/v2 v2.0.13
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.10.0 // indirect
@@ -47,6 +48,7 @@ require (
 	github.com/jackc/pgtype v1.8.1 // indirect
 	github.com/jackc/puddle v1.1.3 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
+	github.com/pashagolub/pgxmock v1.4.0
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.31.0 // indirect
