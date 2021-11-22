@@ -91,3 +91,4 @@ yarn release
 - [Building Chat Service in Golang and Websockets Backed by Redis](https://levelup.gitconnected.com/building-chat-service-in-golang-and-websockets-backed-by-redis-b42a8784636c)
 - [CockroachDB: Spatial and GIS Glossary of Terms](https://www.cockroachlabs.com/docs/v21.2/spatial-glossary#data-types)
 - [BUILD AN INTERACTIVE GAME OF THRONES MAP (PART I) - NODE.JS, POSTGIS, AND REDIS](https://blog.patricktriest.com/game-of-thrones-map-node-postgres-redis/)
+- [Geometries](https://postgis.net/workshops/postgis-intro/geometries.html)
