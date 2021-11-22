@@ -110,7 +110,7 @@ func runHub(setupContext *types.SetupContext) {
 // Chat godoc
 // @Summary global chat room
 // @ID chat
-// @Produce  websocket
+// @Produce  json
 // @Router /chat [get]
 func SetupWebsocket_Chat(setupContext *types.SetupContext) {
 	app := setupContext.App

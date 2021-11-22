@@ -62,6 +62,15 @@ var doc = `{
                 "summary": "hongkong weather info",
                 "operationId": "get-random-anime-image"
             }
+        },
+        "/chat": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "global chat room",
+                "operationId": "chat"
+            }
         }
     }
 }`

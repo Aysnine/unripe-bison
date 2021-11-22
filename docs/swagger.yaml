@@ -33,4 +33,10 @@ paths:
       produces:
       - application/json
       summary: hongkong weather info
+  /chat:
+    get:
+      operationId: chat
+      produces:
+      - application/json
+      summary: global chat room
 swagger: "2.0"
