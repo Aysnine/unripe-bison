@@ -72,7 +72,6 @@ yarn release
 ## TODO
 
 - Books full CRUD
-- Websocket Demo
 - Custom Error response
 - Login auth
 - Transactions Demo
