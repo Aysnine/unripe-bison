@@ -91,3 +91,4 @@ yarn release
 - [CockroachDB: Spatial and GIS Glossary of Terms](https://www.cockroachlabs.com/docs/v21.2/spatial-glossary#data-types)
 - [BUILD AN INTERACTIVE GAME OF THRONES MAP (PART I) - NODE.JS, POSTGIS, AND REDIS](https://blog.patricktriest.com/game-of-thrones-map-node-postgres-redis/)
 - [Geometries](https://postgis.net/workshops/postgis-intro/geometries.html)
+- [Google Protobuf vs JSON vs [insert candidate here]](https://www.reddit.com/r/cpp/comments/pf3n3m/google_protobuf_vs_json_vs_insert_candidate_here/)
