@@ -92,3 +92,4 @@ yarn release
 - [BUILD AN INTERACTIVE GAME OF THRONES MAP (PART I) - NODE.JS, POSTGIS, AND REDIS](https://blog.patricktriest.com/game-of-thrones-map-node-postgres-redis/)
 - [Geometries](https://postgis.net/workshops/postgis-intro/geometries.html)
 - [Google Protobuf vs JSON vs [insert candidate here]](https://www.reddit.com/r/cpp/comments/pf3n3m/google_protobuf_vs_json_vs_insert_candidate_here/)
+- [New Architecture of OAuth 2.0 and OpenID Connect Implementation](https://darutk.medium.com/new-architecture-of-oauth-2-0-and-openid-connect-implementation-18f408f9338d)
