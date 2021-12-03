@@ -78,6 +78,7 @@ yarn release
 - Unit test with mocked database. eg: [pgmock](https://github.com/jackc/pgmock)
 - Auto run initial sql
 - Auto Migrations
+- Use sqlc
 
 ## Learn References
 
