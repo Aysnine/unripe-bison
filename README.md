@@ -79,6 +79,7 @@ yarn release
 - Auto run initial sql
 - Auto Migrations
 - Use sqlc
+- PG GIS world Demo
 
 ## Learn References
 
