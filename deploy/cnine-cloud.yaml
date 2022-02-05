@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unripe-bison
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      k8s-app: unripe-bison
+  template:
+    metadata:
+      labels:
+        k8s-app: unripe-bison
+    spec:
+      containers:
+        - env:
+            - name: MODE
+              value: development
+            - name: CHAT_REDIS_CONNECTION
+              value: redis://unripe-bison-redis:6379/1
+            - name: DATABASE_CONNECTION
+              value: COCKROACH_DB_CONNECTION_STRING
+          image: hkccr.ccs.tencentyun.com/aysnine/unripe-bison:latest
+          name: unripe-bison
+          resources:
+            limits:
+              cpu: 100m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 64Mi
+      imagePullSecrets:
+        - name: qcloudregistrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unripe-bison
+spec:
+  type: ClusterIP
+  ports:
+    - name: entry
+      port: 80
+      targetPort: 9000
+  selector:
+    k8s-app: unripe-bison
+  sessionAffinity: ClientIP
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: unripe-bison
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`unripe-bison.cnine.me`)
+      kind: Rule
+      services:
+        - name: unripe-bison
+          port: entry
+      middlewares:
+        - name: unripe-bison-https-redirect-middleware
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: unripe-bison-https-redirect-middleware
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: unripe-bison-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`unripe-bison.cnine.me`)
+      kind: Rule
+      services:
+        - name: unripe-bison
+          port: entry
+  tls:
+    certResolver: default
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unripe-bison-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: unripe-bison-redis
+  template:
+    metadata:
+      labels:
+        k8s-app: unripe-bison-redis
+    spec:
+      containers:
+        - image: redis:6-alpine
+          name: unripe-bison-redis
+          resources:
+            limits:
+              cpu: 100m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 64Mi
+      imagePullSecrets:
+        - name: qcloudregistrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unripe-bison-redis
+spec:
+  type: ClusterIP
+  ports:
+    - name: entry
+      port: 6379
+      targetPort: 6379
+  selector:
+    k8s-app: unripe-bison-redis
+  sessionAffinity: ClientIP

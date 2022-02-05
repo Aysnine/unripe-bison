@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags-ignore:
-      - '**'
+      - "**"
   pull_request:
     branches:
       - main
@@ -20,19 +20,18 @@ jobs:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
 
-    - name: Install Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: ${{ matrix.go-version }}
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Test
-      env:
-        DATABASE_CONNECTION: ${{ secrets.DATABASE_CONNECTION }}
-      run: go test ./...
+      - name: Test
+        env:
+          DATABASE_CONNECTION: ${{ secrets.DATABASE_CONNECTION }}
+        run: go test ./...
 
   integration:
     needs: test
@@ -41,38 +40,31 @@ jobs:
     outputs:
       latestVersion: ${{ steps.previousTag.outputs.tag }}
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      -
-        name: Set up QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1 
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Login to Tencent Registry
-        uses: docker/login-action@v1 
+      - name: Login to Tencent Registry
+        uses: docker/login-action@v1
         with:
           registry: hkccr.ccs.tencentyun.com
           username: ${{ secrets.TENCENT_USERNAME }}
           password: ${{ secrets.TENCENT_TOKEN }}
-      -
-        name: Get Previous tag
+      - name: Get Previous tag
         id: previousTag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
         with:
           fallback: 1.0.0 # Optional fallback tag to use when no tag can be found
-      -
-        name: Build and push
+      - name: Build and push
         if: ${{ startsWith(github.event.head_commit.message, 'chore(release)') }}
         uses: docker/build-push-action@v2
         with:
@@ -83,76 +75,15 @@ jobs:
             hkccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ steps.previousTag.outputs.tag }}
             hkccr.ccs.tencentyun.com/aysnine/unripe-bison:latest
 
-  deployment:
-    needs: integration
-    runs-on: ubuntu-latest
-    steps:
+      - run: |
+          TAG=${{ steps.previousTag.outputs.tag }}
+          echo $TAG
+          COCKROACH_DB_CONNECTION_STRING=${{ secrets.DATABASE_CONNECTION }}
+          sed -i -e "s/\:latest/\:${TAG}/g" ./deploy/cnine-cloud.yaml
+          sed -i -e "s/COCKROACH_DB_CONNECTION_STRING/${COCKROACH_DB_CONNECTION_STRING}/g" ./deploy/cnine-cloud.yaml
+          cat ./deploy/cnine-cloud.yaml
       - uses: actions-hub/kubectl@v1.21.2
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-
-      - name: Generate k8s deployment file
-        run: |
-          cat <<EOT3 > ./deployment.yaml
-          apiVersion: apps/v1
-          kind: Deployment
-          metadata:
-            name: unripe-bison
-          spec:
-            progressDeadlineSeconds: 600
-            replicas: 2
-            revisionHistoryLimit: 10
-            selector:
-              matchLabels:
-                k8s-app: unripe-bison
-                qcloud-app: unripe-bison
-            strategy:
-              rollingUpdate:
-                maxSurge: 1
-                maxUnavailable: 0
-              type: RollingUpdate
-            template:
-              metadata:
-                labels:
-                  k8s-app: unripe-bison
-                  qcloud-app: unripe-bison
-              spec:
-                containers:
-                - env:
-                  - name: MODE
-                    value: development
-                  - name: CHAT_REDIS_CONNECTION
-                    value: redis://unripe-bison-redis:6379/1
-                  - name: DATABASE_CONNECTION
-                    valueFrom:
-                      secretKeyRef:
-                        key: unripe-bison-database
-                        name: unripe-bison-database
-                        optional: false
-                  image: hkccr.ccs.tencentyun.com/aysnine/unripe-bison:${{ needs.integration.outputs.latestVersion }}
-                  imagePullPolicy: IfNotPresent
-                  name: unripe-bison-server
-                  resources:
-                    limits:
-                      cpu: 100m
-                      memory: 64Mi
-                    requests:
-                      cpu: 10m
-                      memory: 64Mi
-                  securityContext:
-                    privileged: false
-                  terminationMessagePath: /dev/termination-log
-                  terminationMessagePolicy: File
-                dnsPolicy: ClusterFirst
-                imagePullSecrets:
-                - name: qcloudregistrykey
-                restartPolicy: Always
-                schedulerName: default-scheduler
-                securityContext: {}
-                terminationGracePeriodSeconds: 30
-          EOT3
-          cat ./deployment.yaml
-
-      - uses: actions-hub/kubectl@v1.21.2
         with:
-          args: apply -f deployment.yaml
+          args: apply -f ./deploy/cnine-cloud.yaml
