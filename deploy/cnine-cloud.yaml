@@ -19,7 +19,7 @@ spec:
             - name: CHAT_REDIS_CONNECTION
               value: redis://unripe-bison-redis:6379/1
             - name: DATABASE_CONNECTION
-              value: COCKROACH_DB_CONNECTION_STRING
+              value: #{DATABASE_CONNECTION}#
           image: hkccr.ccs.tencentyun.com/aysnine/unripe-bison:latest
           name: unripe-bison
           resources:

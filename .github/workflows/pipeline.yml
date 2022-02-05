@@ -71,10 +71,15 @@ jobs:
       - run: |
           TAG=${{ steps.previousTag.outputs.tag }}
           echo $TAG
-          COCKROACH_DB_CONNECTION_STRING=${{ secrets.DATABASE_CONNECTION }}
           sed -i -e "s/\:latest/\:${TAG}/g" ./deploy/cnine-cloud.yaml
-          sed -i -e "s/COCKROACH_DB_CONNECTION_STRING/${COCKROACH_DB_CONNECTION_STRING}/g" ./deploy/cnine-cloud.yaml
           cat ./deploy/cnine-cloud.yaml
+
+      - uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["deploy/*.yaml"]'
+        env:
+          DATABASE_CONNECTION: ${{ secrets.DATABASE_CONNECTION }}
+
       - uses: actions-hub/kubectl@v1.21.2
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
